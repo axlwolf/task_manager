@@ -6,8 +6,6 @@ import { IconComponent } from './components/icon/icon.component';
 import { PulseDirective } from './directives/pulse.directive';
 import { BounceDirective } from './directives/bounce.directive';
 import { HighlightDirective } from './directives/highlight.directive';
-import { ShakeDirective } from './directives/shake.directive';
-import { RotateDirective } from './directives/rotate.directive';
 
 @NgModule({
   imports: [
@@ -18,8 +16,6 @@ import { RotateDirective } from './directives/rotate.directive';
     PulseDirective,
     BounceDirective,
     HighlightDirective,
-    ShakeDirective,
-    RotateDirective,
   ],
   exports: [
     IconsModule,
@@ -28,8 +24,6 @@ import { RotateDirective } from './directives/rotate.directive';
     PulseDirective,
     BounceDirective,
     HighlightDirective,
-    ShakeDirective,
-    RotateDirective,
   ],
 })
 export class SharedModule {}

@@ -3,24 +3,11 @@ import { CommonModule } from '@angular/common';
 import { PulseDirective } from '../directives/pulse.directive';
 import { BounceDirective } from '../directives/bounce.directive';
 import { HighlightDirective } from '../directives/highlight.directive';
-import { ShakeDirective } from '../directives/shake.directive';
-import { RotateDirective } from '../directives/rotate.directive';
 
-const DIRECTIVES = [
-  PulseDirective,
-  BounceDirective,
-  HighlightDirective,
-  ShakeDirective,
-  RotateDirective
-];
+const DIRECTIVES = [PulseDirective, BounceDirective, HighlightDirective];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ...DIRECTIVES
-  ],
-  exports: [
-    ...DIRECTIVES
-  ]
+  imports: [CommonModule, ...DIRECTIVES],
+  exports: [...DIRECTIVES],
 })
-export class AnimationsModule { }
+export class AnimationsModule {}

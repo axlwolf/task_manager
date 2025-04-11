@@ -11,18 +11,11 @@ import { IconsModule } from '../../modules/icons.module';
 import { AnimationService } from '../../services/animation.service';
 import { PulseDirective } from '../../directives/pulse.directive';
 import { BounceDirective } from '../../directives/bounce.directive';
-import { RotateDirective } from '../../directives/rotate.directive';
 
 @Component({
   selector: 'app-icon',
   standalone: true,
-  imports: [
-    CommonModule,
-    IconsModule,
-    PulseDirective,
-    BounceDirective,
-    RotateDirective,
-  ],
+  imports: [CommonModule, IconsModule, PulseDirective, BounceDirective],
   template: `
     <div
       class="icon-container"
@@ -244,7 +237,7 @@ export class IconComponent {
   @Input() strokeWidth: 1 | 2 | 3 = 2;
   @Input() animate: boolean = false;
   @Input() interactive: boolean = false;
-  @Input() effect: 'pulse' | 'bounce' | 'rotate' | 'none' = 'pulse';
+  @Input() effect: 'pulse' | 'bounce' | 'none' = 'pulse';
   @Input() effectDuration: number = 300;
 
   @Output() click = new EventEmitter<void>();
@@ -301,13 +294,7 @@ export class IconComponent {
         );
         this.animationService.playAnimation(element, bounceAnimation);
         break;
-      case 'rotate':
-        const rotateAnimation = this.animationService.createRotateAnimation(
-          this.effectDuration,
-          180
-        );
-        this.animationService.playAnimation(element, rotateAnimation);
-        break;
+      // Removed rotate case as it's no longer needed
     }
   }
 }
