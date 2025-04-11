@@ -15,7 +15,7 @@ import { CompleteTaskUseCase } from '../../application/usecases/complete-task.us
 import { CreateTaskDto } from '../../application/dtos/task.dto';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { DialogService } from '../../../../shared/services/dialog.service';
+import { DialogService } from '../../../../shared/components/dialog/dialog.service';
 import { TaskDialogFormComponent } from '../components/task-dialog-form/task-dialog-form.component';
 
 @Injectable({
@@ -132,7 +132,6 @@ export class TasksStoreService {
    */
   setViewContainerRef(vcr: ViewContainerRef): void {
     this.viewContainerRef = vcr;
-    this.dialogService.setViewContainerRef(vcr);
   }
 
   /**
@@ -147,13 +146,17 @@ export class TasksStoreService {
     }
 
     // Open the dialog with the task form component
-    this.dialogService.open(TaskDialogFormComponent, {
-      title: 'Add New Task',
-      dialogClass: 'dialog-md',
-      showFooter: true,
-      hideDefaultButtons: true,
-      closeOnEscape: true,
-      closeOnBackdropClick: true,
-    });
+    this.dialogService.open(
+      TaskDialogFormComponent,
+      {
+        title: '',
+        size: 'md',
+        showFooter: false,
+        hideDefaultButtons: true,
+        closeOnEscape: true,
+        closeOnBackdropClick: false,
+      },
+      this.viewContainerRef
+    );
   }
 }

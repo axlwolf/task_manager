@@ -12,6 +12,7 @@ import { IconComponent } from '../../../../../shared/components/icon/icon.compon
 import { PulseDirective } from '../../../../../shared/directives/pulse.directive';
 import { BounceDirective } from '../../../../../shared/directives/bounce.directive';
 import { AnimationService } from '../../../../../shared/services/animation.service';
+import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
 
 @Component({
   selector: 'app-task-dialog-form',
@@ -24,16 +25,10 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
   ],
   template: `
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+      <h1 class="dialog-title">Add Task</h1>
+
       <div class="form-group">
-        <label for="title" class="form-label">
-          <app-icon
-            name="edit"
-            [size]="16"
-            theme="primary"
-            class="mr-1"
-          ></app-icon>
-          Task Title
-        </label>
+        <label for="title" class="form-label">Title</label>
         <input
           type="text"
           id="title"
@@ -57,42 +52,35 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
       </div>
 
       <div class="form-group">
-        <label for="description" class="form-label">
-          <app-icon
-            name="file-text"
-            [size]="16"
-            theme="primary"
-            class="mr-1"
-          ></app-icon>
-          Description
-        </label>
+        <label for="description" class="form-label">Summary</label>
         <textarea
           id="description"
           formControlName="description"
           class="form-input form-textarea"
-          placeholder="Enter task description"
-          rows="4"
+          placeholder="Enter task summary"
+          rows="6"
           appPulse
         ></textarea>
       </div>
 
       <div class="form-group">
-        <label for="dueDate" class="form-label">
+        <label for="dueDate" class="form-label">Due Date</label>
+        <div class="date-input-container">
+          <input
+            type="date"
+            id="dueDate"
+            formControlName="dueDate"
+            class="form-input date-input"
+            placeholder="dd.mm.yyyy"
+            appPulse
+          />
           <app-icon
             name="calendar"
-            [size]="16"
-            theme="primary"
-            class="mr-1"
+            [size]="20"
+            theme="secondary"
+            class="date-icon"
           ></app-icon>
-          Due Date
-        </label>
-        <input
-          type="date"
-          id="dueDate"
-          formControlName="dueDate"
-          class="form-input"
-          appPulse
-        />
+        </div>
         @if (taskForm.get('dueDate')?.invalid &&
         taskForm.get('dueDate')?.touched) {
         <div class="form-error">
@@ -107,103 +95,173 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
         }
       </div>
 
-      <div class="form-actions" dialog-footer>
+      <div class="form-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="onCancel()"
+          appPulse
+        >
+          Cancel
+        </button>
         <button
           type="submit"
-          class="form-submit-button"
+          class="create-button"
           [disabled]="taskForm.invalid"
           appBounce
           [bounceOnClick]="true"
         >
-          <app-icon
-            name="check-circle"
-            [size]="16"
-            theme="light"
-            class="mr-1"
-          ></app-icon>
-          Add Task
+          Create
         </button>
       </div>
     </form>
   `,
   styles: [
     `
+      :host {
+        --form-bg-color: var(--color-primary-dark);
+        --form-text-color: white;
+        --form-input-bg: #e0d8ee;
+        --form-input-text: #333;
+        --form-button-bg: #b69edf;
+        --form-button-text: #333;
+      }
+
       .task-form {
         display: flex;
         flex-direction: column;
-        gap: var(--space-4);
+        gap: 1.5rem;
+        width: 100%;
+        padding: 2rem;
+        background-color: var(--form-bg-color);
+        color: var(--form-text-color);
+        border-radius: 1rem;
+      }
+
+      .dialog-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--form-text-color);
       }
 
       .form-group {
-        margin-bottom: var(--space-4);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 0;
       }
 
       .form-label {
-        display: flex;
-        align-items: center;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: var(--color-text-accent);
-        margin-bottom: var(--space-2);
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--form-text-color);
+        display: block;
+        margin-bottom: 0.5rem;
       }
 
       .form-input {
         width: 100%;
-        padding: var(--space-3) var(--space-4);
-        background-color: var(--color-input-bg);
-        border: 1px solid var(--color-input-border);
-        border-radius: var(--radius-md);
-        color: var(--color-text-primary);
-        transition: border-color var(--transition-fast),
-          box-shadow var(--transition-fast);
+        padding: 0.75rem;
+        border: none;
+        border-radius: 0.375rem;
+        background-color: var(--form-input-bg);
+        color: var(--form-input-text);
+        font-size: 1rem;
+        transition: box-shadow 0.2s;
       }
 
       .form-input:focus {
         outline: none;
-        border-color: var(--color-input-focus);
-        box-shadow: 0 0 0 2px var(--color-primary-200);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
       }
 
       .form-textarea {
-        resize: vertical;
-        min-height: 100px;
+        min-height: 150px;
+        resize: none;
+      }
+
+      .date-input-container {
+        position: relative;
+      }
+
+      .date-input {
+        width: 100%;
+      }
+
+      .date-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
       }
 
       .form-error {
-        margin-top: var(--space-2);
-        font-size: 0.875rem;
-        color: var(--color-error);
         display: flex;
         align-items: center;
+        color: #ff6b6b;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
       }
 
       .form-actions {
         display: flex;
         justify-content: flex-end;
-        margin-top: var(--space-4);
+        gap: 1rem;
+        margin-top: 1rem;
       }
 
-      .form-submit-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-2) var(--space-4);
-        background-color: var(--color-primary-600);
-        color: var(--color-text-on-primary);
+      .cancel-button {
+        padding: 0.75rem 1.5rem;
+        background: transparent;
+        color: var(--form-text-color);
         border: none;
-        border-radius: var(--radius-md);
+        border-radius: 0.375rem;
         font-weight: 500;
+        font-size: 1rem;
         cursor: pointer;
-        transition: background-color var(--transition-fast);
+        transition: opacity 0.2s;
       }
 
-      .form-submit-button:hover:not(:disabled) {
-        background-color: var(--color-primary-700);
+      .cancel-button:hover {
+        opacity: 0.8;
       }
 
-      .form-submit-button:disabled {
+      .create-button {
+        padding: 0.75rem 1.5rem;
+        background-color: var(--form-button-bg);
+        color: var(--form-button-text);
+        border: none;
+        border-radius: 0.375rem;
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .create-button:hover {
+        opacity: 0.9;
+      }
+
+      .create-button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+      }
+
+      .mr-1 {
+        margin-right: 0.25rem;
+      }
+
+      /* Estilos específicos para el input de fecha */
+      input[type='date']::-webkit-calendar-picker-indicator {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
       }
     `,
   ],
@@ -215,6 +273,11 @@ export class TaskDialogFormComponent implements OnInit {
   private readonly tasksStore = inject(TasksStoreService);
   private readonly createTaskUseCase = inject(CreateTaskUseCase);
   private readonly animationService = inject(AnimationService);
+  private readonly dialogRef = inject(DialogRef);
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -271,6 +334,9 @@ export class TaskDialogFormComponent implements OnInit {
         animation
       );
     }
+
+    // Close the dialog after successful submission
+    this.dialogRef.close(task);
   }
 
   private formatDate(date: Date): string {
