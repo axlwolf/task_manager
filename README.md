@@ -129,9 +129,9 @@ EasyTask comes with 7 beautiful themes that can be switched at runtime:
    - Gradient background from purple to blue
    - Accent color: #FD8A8A (peach pink)
 7. **Turquesa Fresco** - Fresh mobile app inspired theme
-   - Light blue background (#E5F4F6)
-   - Primary color: #26C6C4 (turquoise)
-   - Accent color: #F89B55 (orange)
+   - Light blue background (#F5FCFC)
+   - Primary color: #2BBFB0 (turquoise)
+   - Accent color: #F2994A (orange)
 
 Themes are managed by the `ThemeService` and can be switched using the theme selector in the application header.
 
