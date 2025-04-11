@@ -171,6 +171,152 @@ Run `ng serve` for a dev server. The application will automatically reload if yo
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+### Testing
+
+Run `ng test` to execute the unit tests via Karma.
+
+We follow a standardized testing approach using a setup function pattern:
+
+#### Component Testing
+
+```typescript
+// Setup function for creating component with custom configuration
+const setup = (config?: {
+  /* custom config */
+}) => {
+  // Configure test data and dependencies
+  // Setup TestBed
+  // Create component
+  return { fixture, component, dependencies };
+};
+
+// Example test
+it("should show empty state when no data is available", () => {
+  const { fixture } = setup({ tasks: [] });
+
+  const emptyState = fixture.debugElement.query(By.css(".empty-state"));
+  expect(emptyState).toBeTruthy();
+});
+```
+
+#### Service Testing
+
+```typescript
+// Setup function for testing services
+const setup = (args?: {
+  // Custom configuration
+  store?: {
+    /* store config */
+  };
+  dialogResult?: {
+    /* dialog result */
+  };
+}) => {
+  // Configure TestBed with mocked dependencies
+  // Return service and mocked dependencies
+  return { service, dependencies, spies };
+};
+
+// Example test
+it("should handle validation errors", async () => {
+  const { service, errorHandlerSpy } = setup({
+    dialogResult: { hasConfirmation: true, username: "" },
+  });
+
+  await service.execute();
+
+  expect(errorHandlerSpy).toHaveBeenCalledTimes(1);
+});
+```
+
+#### Use Case Testing
+
+````typescript
+describe("UpdateTaskUseCase", () => {
+  let usecase: UpdateTaskUseCase;
+  let repository: jasmine.SpyObj<TaskRepository>;
+  let notifierSpy: jasmine.Spy;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        UpdateTaskUseCase,
+        provideTestingServices(),
+        { provide: TaskRepository, useValue: jasmine.createSpyObj('TaskRepository', ['updateTask']) }
+      ]
+    });
+
+    usecase = TestBed.inject(UpdateTaskUseCase);
+    repository = TestBed.inject(TaskRepository) as jasmine.SpyObj<TaskRepository>;
+    const notifier = TestBed.inject(NotifierService);
+    notifierSpy = spyOn(notifier, 'success');
+  });
+
+  it("should update task successfully", fakeAsync(() => {
+    const task = { id: '1', title: 'Task 1' };
+    repository.updateTask.and.returnValue(of(task));
+
+    let result: any;
+    usecase.execute(task).subscribe(res => result = res);
+
+    tick();
+
+    expect(result).toEqual(task);
+    expect(repository.updateTask).toHaveBeenCalledWith(task);
+    expect(notifierSpy).toHaveBeenCalled();
+  }));
+});
+
+#### Repository Testing
+
+```typescript
+describe("TaskRepository", () => {
+  let repository: TaskRepository;
+  let httpController: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        TaskRepository,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    });
+
+    repository = TestBed.inject(TaskRepository);
+    httpController = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpController.verify(); // Verify no pending requests
+  });
+
+  it("should retrieve tasks successfully", () => {
+    const userId = "123";
+    const expectedTasks = [{ id: "1", title: "Task 1" }];
+
+    repository.getTasks(userId).subscribe(tasks => {
+      expect(tasks).toEqual(expectedTasks);
+    });
+
+    const req = httpController.expectOne(`/api/users/${userId}/tasks`);
+    expect(req.request.method).toBe("GET");
+    req.flush(expectedTasks);
+  });
+});
+
+This pattern provides several benefits:
+
+- Centralized configuration for component and service tests
+- Customizable test data for each test case
+- Clean and focused test assertions
+- Consistent mocking of dependencies
+- Isolated testing of HTTP interactions
+- Reusable setup across different test scenarios
+
+See the [Testing Patterns](memory-bank/testingPatterns.md) documentation for more details.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+````

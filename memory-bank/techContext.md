@@ -158,9 +158,305 @@ src/
 
 ## Testing Approach
 
+### Testing Framework
+
 - Unit tests with Jasmine and Karma
 - Component testing with Angular Testing Library
 - E2E testing with Cypress (future implementation)
+
+### Component Testing Pattern
+
+We use a standardized setup function pattern for component tests:
+
+```typescript
+// Default test data
+const defaultData = {
+  // Define default test data here
+  user: { id: "1", name: "Test User" } as User,
+  tasks: [
+    {
+      id: "1",
+      title: "Task 1",
+      description: "Description 1",
+      dueDate: new Date(),
+      userId: "1",
+      completed: false,
+    },
+  ] as Task[],
+};
+
+// Setup function for creating component with custom configuration
+const setup = (config?: { tasks?: Task[]; user?: User | null }) => {
+  // Merge default data with custom config
+  const testData = {
+    tasks: config?.tasks ?? [...defaultData.tasks],
+    user: config?.user ?? { ...defaultData.user },
+  };
+
+  // Create mocks for dependencies
+  const tasksSpy = jasmine.createSpyObj("TasksStoreService", ["showAddTaskForm"]);
+
+  // Configure mocks with test data
+  Object.defineProperty(tasksSpy, "tasks", {
+    get: () => signal(testData.tasks).asReadonly(),
+  });
+
+  // Configure TestBed
+  TestBed.configureTestingModule({
+    imports: [ComponentUnderTest, OtherComponents],
+    providers: [{ provide: DependencyService, useValue: mockService }],
+  });
+
+  // Create component and fixture
+  const fixture = TestBed.createComponent(ComponentUnderTest);
+  const component = fixture.componentInstance;
+  const dependencyService = TestBed.inject(DependencyService);
+
+  fixture.detectChanges();
+
+  return { fixture, component, dependencyService, testData };
+};
+
+// Example test
+it("should show empty state when no data is available", () => {
+  // Setup with empty data
+  const { fixture } = setup({ tasks: [] });
+
+  // Test assertions
+  const emptyState = fixture.debugElement.query(By.css(".empty-state"));
+  expect(emptyState).toBeTruthy();
+});
+```
+
+This pattern provides several benefits:
+
+1. **Centralized Configuration**: All component setup is in one place
+2. **Customizable Test Data**: Each test can customize the data it needs
+3. **Clean Test Cases**: Tests focus on assertions, not setup
+4. **Consistent Mocking**: Dependencies are mocked consistently
+5. **Reusable Setup**: The setup function can be reused across tests
+
+### Service Testing Pattern
+
+Para los servicios, utilizamos un enfoque similar:
+
+```typescript
+const setup = (args?: {
+  // Configuración personalizable
+  store?: {
+    merchantId?: number;
+    users?: UserList | null;
+  };
+  dialogResult?: DialogResultDto;
+}) => {
+  // Configuración por defecto
+  const defaultConfig = {
+    store: {
+      merchantId: 123,
+      users: {
+        /* datos por defecto */
+      },
+    },
+    dialogResult: {
+      hasConfirmation: false,
+    },
+  };
+
+  // Combinar configuración
+  const config = {
+    store: {
+      selectedId$: of(args?.store?.merchantId ?? defaultConfig.store.merchantId),
+      users$: of(args?.store?.users ?? defaultConfig.store.users),
+    },
+    dialogResult: {
+      ...defaultConfig.dialogResult,
+      ...args?.dialogResult,
+    },
+  };
+
+  // Configurar TestBed
+  TestBed.configureTestingModule({
+    providers: [
+      ServiceUnderTest,
+      provideMockServices(), // Helper para mocks comunes
+      {
+        provide: StoreService,
+        useValue: {
+          selectedId$: config.store.selectedId$,
+          users$: config.store.users$,
+          setUsers: jasmine.createSpy("setUsers"),
+        },
+      },
+      {
+        provide: DialogService,
+        useValue: {
+          open: () => ({
+            afterClosed$: of(config.dialogResult),
+          }),
+        },
+      },
+    ],
+  });
+
+  // Obtener servicio y dependencias
+  const service = TestBed.inject(ServiceUnderTest);
+  const store = TestBed.inject(StoreService);
+  const dialog = TestBed.inject(DialogService);
+  const notifier = TestBed.inject(NotifierService);
+
+  // Configurar spies
+  const dialogSpy = spyOn(dialog, "open").and.callThrough();
+  const notifierSpy = spyOn(notifier, "success").and.callThrough();
+
+  return {
+    service,
+    store,
+    dialogSpy,
+    notifierSpy,
+  };
+};
+```
+
+Este patrón facilita la prueba de servicios con múltiples dependencias y configuraciones.
+
+### Use Case Testing Pattern
+
+Para los casos de uso, utilizamos un enfoque basado en TestBed con foco en la validación y manejo de errores:
+
+```typescript
+describe("UpdateTaskUseCase", () => {
+  let usecase: UpdateTaskUseCase;
+  let repository: jasmine.SpyObj<TaskRepository>;
+  let showLoaderSpy: jasmine.Spy;
+  let hideLoaderSpy: jasmine.Spy;
+  let handleErrorSpy: jasmine.Spy;
+  let successNotifierSpy: jasmine.Spy;
+
+  // Datos de prueba
+  const taskData = {
+    id: "1",
+    title: "Task 1",
+    description: "Description 1",
+    dueDate: new Date(),
+    userId: "1",
+    completed: false,
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        UpdateTaskUseCase,
+        // Proveedores para servicios comunes
+        provideLoaderTesting(),
+        provideNotifierTesting(),
+        provideErrorHandlerTesting(),
+        // Mock del repositorio
+        {
+          provide: TaskRepository,
+          useValue: jasmine.createSpyObj("TaskRepository", ["updateTask"]),
+        },
+      ],
+    });
+
+    // Obtener el caso de uso y sus dependencias
+    usecase = TestBed.inject(UpdateTaskUseCase);
+    repository = TestBed.inject(TaskRepository) as jasmine.SpyObj<TaskRepository>;
+
+    // Configurar spies para los servicios comunes
+    const loader = TestBed.inject(LoaderService);
+    showLoaderSpy = spyOn(loader, "show").and.callThrough();
+    hideLoaderSpy = spyOn(loader, "hide").and.callThrough();
+
+    const notifier = TestBed.inject(NotifierService);
+    successNotifierSpy = spyOn(notifier, "success").and.callThrough();
+
+    const errorHandler = TestBed.inject(ErrorHandler);
+    handleErrorSpy = spyOn(errorHandler, "handle").and.callThrough();
+  });
+
+  it("should update the task successfully", fakeAsync(() => {
+    // Configurar el repositorio para que devuelva éxito
+    repository.updateTask.and.returnValue(of(taskData));
+
+    let result: any;
+
+    usecase.execute(taskData).subscribe({
+      next: (response) => {
+        result = response;
+      },
+      error: fail,
+    });
+
+    tick();
+
+    expect(result).toEqual(taskData);
+    expect(showLoaderSpy).toHaveBeenCalledTimes(1);
+    expect(hideLoaderSpy).toHaveBeenCalledTimes(1);
+    expect(successNotifierSpy).toHaveBeenCalledTimes(1);
+    expect(repository.updateTask).toHaveBeenCalledWith(taskData);
+  }));
+});
+```
+
+Este enfoque permite probar de manera exhaustiva la lógica de negocio, la validación de datos y el manejo de errores en los casos de uso.
+
+### Repository Testing Pattern
+
+Para los repositorios, utilizamos HttpTestingController para simular las interacciones HTTP:
+
+```typescript
+describe("TaskRepositoryImpl", () => {
+  let httpController: HttpTestingController;
+  let repository: TaskRepositoryImpl;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [TaskRepositoryImpl, { provide: ENVIRONMENT, useValue: { apiBaseUrl: "https://api.example.com" } }, provideHttpClient(), provideHttpClientTesting()],
+    });
+
+    httpController = TestBed.inject(HttpTestingController);
+    repository = TestBed.inject(TaskRepositoryImpl);
+  });
+
+  afterEach(() => {
+    httpController.verify(); // Verificar que no haya solicitudes pendientes
+  });
+
+  it("should retrieve tasks successfully", () => {
+    const userId = "123";
+    const expectedTasks = [{ id: "1", title: "Task 1", userId: "123" }];
+
+    repository.getTasks(userId).subscribe({
+      next: (tasks) => {
+        expect(tasks).toEqual(expectedTasks);
+      },
+      error: fail,
+    });
+
+    // Capturar y responder a la solicitud HTTP
+    const req = httpController.expectOne(`https://api.example.com/users/${userId}/tasks`);
+    expect(req.request.method).toBe("GET");
+    req.flush(expectedTasks); // Simular respuesta exitosa
+  });
+
+  it("should handle server errors", () => {
+    const userId = "123";
+
+    repository.getTasks(userId).subscribe({
+      next: fail,
+      error: (error) => {
+        expect(error.status).toBe(500);
+      },
+    });
+
+    // Simular error del servidor
+    const req = httpController.expectOne(`https://api.example.com/users/${userId}/tasks`);
+    req.flush("Server error", { status: 500, statusText: "Server Error" });
+  });
+});
+```
+
+Este enfoque permite probar de manera aislada las interacciones con el backend, verificando URLs, métodos HTTP, parámetros y manejo de respuestas.
 
 ## Monitoring and Analytics
 

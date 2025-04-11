@@ -1,0 +1,25 @@
+<div class="tasks-header-container" role="region" aria-label="Tasks list">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="tasks-header-title" id="tasks-heading">
+      {{ displayUser?.name || "Select a user" }}'s Tasks
+    </h2>
+    <app-add-task-button aria-label="Add new task"></app-add-task-button>
+  </div>
+
+  @if (displayTasks.length === 0) {
+  <div class="tasks-empty-container" role="status">
+    <p class="tasks-empty-text">
+      No tasks available. Add a new task to get started!
+    </p>
+  </div>
+  } @else {
+  <div aria-labelledby="tasks-heading">
+    @for (task of displayTasks; track task.id) {
+    <app-task-card
+      [task]="task"
+      (completed)="onTaskCompleted(task.id)"
+    ></app-task-card>
+    }
+  </div>
+  }
+</div>

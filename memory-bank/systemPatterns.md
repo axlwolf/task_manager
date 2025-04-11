@@ -192,6 +192,135 @@ export class TasksStoreService {
   - Break down complex UIs into smaller, reusable components
   - Use content projection for flexible component templates
 
+### Testing Patterns
+
+- **Setup Function Pattern**:
+
+  - Use a centralized setup function for component and service tests
+  - Configure test data and dependencies in one place
+  - Return fixture, component/service, and mocked dependencies
+
+  ```typescript
+  const setup = (config?: {
+    /* custom config */
+  }) => {
+    // Configure test data
+    // Setup TestBed
+    // Create component/service
+    return { fixture, component, dependencies };
+  };
+  ```
+
+- **Default Test Data**:
+
+  - Define default test data at the top of test files
+  - Allow tests to override only the data they need
+  - Keep test data consistent across test cases
+
+- **Focused Test Cases**:
+
+  - Each test should verify one specific behavior
+  - Use descriptive test names that explain what is being tested
+  - Keep test assertions focused and minimal
+
+- **Service Testing Pattern**:
+
+  - Similar to component testing, but focused on service behavior
+  - Mock all dependencies including stores, dialogs, and notifiers
+  - Test different scenarios by configuring the setup function
+
+  ```typescript
+  const setup = (args?: {
+    // Custom configuration
+    store?: {
+      /* store config */
+    };
+    dialogResult?: {
+      /* dialog result */
+    };
+  }) => {
+    // Configure TestBed with mocked dependencies
+    // Return service and mocked dependencies
+    return { service, dependencies, spies };
+  };
+  ```
+
+- **Use Case Testing Pattern**:
+
+  - Focus on business logic validation and error handling
+  - Mock repositories and infrastructure services
+  - Use fakeAsync/tick for testing asynchronous code
+  - Test validation, error handling, and success scenarios
+
+  ```typescript
+  describe("UseCase", () => {
+    let usecase: UseCase;
+    let repository: jasmine.SpyObj<Repository>;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [UseCase, provideCommonTestingServices(), { provide: Repository, useValue: createRepositoryMock() }],
+      });
+
+      usecase = TestBed.inject(UseCase);
+      repository = TestBed.inject(Repository) as jasmine.SpyObj<Repository>;
+      // Configure additional spies
+    });
+
+    it("should validate input data", fakeAsync(() => {
+      // Test validation logic
+    }));
+
+    it("should handle repository errors", fakeAsync(() => {
+      // Test error handling
+    }));
+
+    it("should process data successfully", fakeAsync(() => {
+      // Test success scenario
+    }));
+  });
+  ```
+
+- **Repository Testing Pattern**:
+
+  - Use HttpTestingController to mock HTTP requests
+  - Verify correct URLs, methods, and request bodies
+  - Simulate successful responses and server errors
+  - Verify proper handling of responses and errors
+
+  ```typescript
+  describe("Repository", () => {
+    let repository: Repository;
+    let httpController: HttpTestingController;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [Repository, provideHttpClient(), provideHttpClientTesting()],
+      });
+
+      repository = TestBed.inject(Repository);
+      httpController = TestBed.inject(HttpTestingController);
+    });
+
+    afterEach(() => {
+      httpController.verify(); // Verify no pending requests
+    });
+
+    it("should make correct HTTP request", () => {
+      // Test HTTP request parameters
+      // Verify URL, method, headers, body
+    });
+
+    it("should handle successful response", () => {
+      // Test successful response handling
+    });
+
+    it("should handle server error", () => {
+      // Test error response handling
+    });
+  });
+  ```
+
 ### State Management Patterns
 
 - **Signal-based State Management**:
