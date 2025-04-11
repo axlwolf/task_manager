@@ -42,39 +42,69 @@ This project follows Clean Architecture principles with a clear separation of co
 ## Project Structure
 
 ```
-src/app/features/tasks/
-├── domain/
-│   ├── models/
-│   │   ├── task.model.ts
-│   │   └── user.model.ts
-│   └── repositories/
-│       ├── task.repository.ts
-│       └── user.repository.ts
-├── application/
-│   ├── dtos/
-│   │   └── task.dto.ts
-│   └── usecases/
-│       ├── create-task.usecase.ts
-│       ├── complete-task.usecase.ts
-│       ├── get-tasks.usecase.ts
-│       └── get-users.usecase.ts
-└── infra/
-    ├── components/
-    │   ├── add-task-button/
-    │   ├── button/
-    │   ├── task-card/
-    │   ├── task-form/
-    │   └── user-list/
-    ├── layout/
-    │   └── tasks-layout.component.ts
-    ├── pages/
-    │   └── tasks-page.component.ts
-    ├── repositories/
-    │   ├── task-impl.repository.ts
-    │   └── user-impl.repository.ts
-    ├── services/
-    │   └── tasks-store.service.ts
-    └── tasks.routes.ts
+project-root/
+├── src/
+│   ├── app/
+│   │   ├── features/
+│   │   │   └── tasks/
+│   │   │       ├── domain/
+│   │   │       │   ├── models/
+│   │   │       │   │   ├── task.model.ts
+│   │   │       │   │   └── user.model.ts
+│   │   │       │   └── repositories/
+│   │   │       │       ├── task.repository.ts
+│   │   │       │       └── user.repository.ts
+│   │   │       ├── application/
+│   │   │       │   ├── dtos/
+│   │   │       │   │   └── task.dto.ts
+│   │   │       │   └── usecases/
+│   │   │       │       ├── create-task.usecase.ts
+│   │   │       │       ├── complete-task.usecase.ts
+│   │   │       │       ├── get-tasks.usecase.ts
+│   │   │       │       └── get-users.usecase.ts
+│   │   │       └── infra/
+│   │   │           ├── components/
+│   │   │           │   ├── add-task-button/
+│   │   │           │   ├── button/
+│   │   │           │   ├── task-card/
+│   │   │           │   ├── task-form/
+│   │   │           │   ├── tasks-list/
+│   │   │           │   └── user-list/
+│   │   │           ├── layout/
+│   │   │           │   └── tasks-layout.component.ts
+│   │   │           ├── pages/
+│   │   │           │   └── tasks-page.component.ts
+│   │   │           ├── repositories/
+│   │   │           │   ├── task-impl.repository.ts
+│   │   │           │   └── user-impl.repository.ts
+│   │   │           ├── services/
+│   │   │           │   └── tasks-store.service.ts
+│   │   │           └── tasks.routes.ts
+│   │   ├── shared/
+│   │   │   ├── components/
+│   │   │   ├── directives/
+│   │   │   └── pipes/
+│   │   │       └── truncate.pipe.ts
+│   │   └── core/
+│   │       └── services/
+│   │           └── theme.service.ts
+│   ├── tests/
+│   │   └── src/
+│   │       └── app/
+│   │           └── features/
+│   │               └── tasks/
+│   │                   └── infra/
+│   │                       └── components/
+│   │                           └── tasks-list/
+│   │                               └── tasks-list.component.spec.ts
+│   └── assets/
+├── memory-bank/
+│   ├── progress.md
+│   ├── systemPatterns.md
+│   ├── techContext.md
+│   └── testingPatterns.md
+├── karma.conf.js
+└── test-setup.ts
 ```
 
 ## Technologies Used
