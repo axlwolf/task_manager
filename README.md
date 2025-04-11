@@ -10,6 +10,7 @@ EasyTask is a modern task management application built with Angular 18, designed
 - **Task Management**: Create, view, and complete tasks
 - **Modern UI**: Clean and responsive interface built with Tailwind CSS
 - **Reactive State Management**: Using Angular Signals for efficient state management
+- **Theme System**: Multiple themes with CSS variables and Angular service
 
 ## Architecture
 
@@ -75,6 +76,7 @@ src/app/features/tasks/
 - **Tailwind CSS**: For styling
 - **RxJS**: For reactive programming
 - **Angular Signals**: For state management
+- **CSS Variables**: For theming support
 
 ## Getting Started
 
@@ -95,6 +97,63 @@ src/app/features/tasks/
    ng serve
    ```
 4. Navigate to `http://localhost:4200/`
+
+## Themes
+
+EasyTask comes with 7 beautiful themes that can be switched at runtime:
+
+![EasyTask Themes](src/assets/theme-showcase.svg)
+
+1. **Purple (Default)** - The classic EasyTask theme with purple accents
+2. **Dark Premium** - A dark theme with purple/lila accents
+   - Dark background (#121212)
+   - Accent color: #A66CFF
+3. **Minimalista Moderna** - A clean, minimalist theme
+   - White background (#FFFFFF)
+   - Accent color: #4CB9E7 (light blue)
+4. **Productividad Natural** - Nature-inspired productivity theme
+   - Beige background (#F5F1E8)
+   - Accent colors: #2D4F3A (forest green) and #E2A890 (terracotta)
+5. **Neo-Digital** - Modern tech-inspired theme
+   - Dark blue background (#192A51)
+   - Accent colors: #00B7C2 (turquoise) and #FF6B6B (coral)
+6. **Gradientes Suaves** - Soft gradient backgrounds
+   - Gradient background from purple to blue
+   - Accent color: #FD8A8A (peach pink)
+7. **Neomorfismo** - Soft shadows and 3D effects
+   - Pearl gray background (#E6E7EE)
+   - Accent color: #84DFAA (mint)
+
+Themes are managed by the `ThemeService` and can be switched using the theme selector in the application header.
+
+### Using the Theme Service
+
+The theme system is implemented using CSS variables and an Angular service. To use it in your components:
+
+```typescript
+import { Component, inject } from "@angular/core";
+import { ThemeService } from "./core/services/theme.service";
+
+@Component({
+  selector: "app-my-component",
+  template: `
+    <div>
+      <p>Current theme: {{ themeService.currentTheme() }}</p>
+      <button (click)="themeService.setTheme('theme-dark')">Switch to Dark</button>
+    </div>
+  `,
+})
+export class MyComponent {
+  protected readonly themeService = inject(ThemeService);
+}
+```
+
+The `ThemeService` provides:
+
+- `currentTheme()` - A signal with the current theme name
+- `setTheme(themeName)` - Method to change the current theme
+- `getThemes()` - Method to get all available themes
+- `loadTheme()` - Method to load the theme from localStorage
 
 ## Development
 

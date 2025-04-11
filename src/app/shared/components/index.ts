@@ -5,3 +5,4 @@ export * from './user-list/user-list.component';
 export * from './task-card/task-card.component';
 export * from './task-list/task-list.component';
 export * from './task-form/task-form.component';
+export * from './theme-switcher/theme-switcher.component';

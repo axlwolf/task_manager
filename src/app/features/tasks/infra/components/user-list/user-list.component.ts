@@ -7,31 +7,49 @@ import { TasksStoreService } from '../../services/tasks-store.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="bg-purple-900 rounded-lg p-2 space-y-2">
+    <div
+      style="background-color: var(--color-sidebar-bg); border-radius: var(--radius-lg); padding: var(--space-2); gap: var(--space-2); display: flex; flex-direction: column;"
+    >
       @for (user of tasksStore.users(); track user.id) {
-        <div 
-          class="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors"
-          [class.bg-purple-700]="tasksStore.selectedUserId() === user.id"
-          [class.bg-purple-800]="tasksStore.selectedUserId() !== user.id"
-          [class.hover:bg-purple-700]="tasksStore.selectedUserId() !== user.id"
-          (click)="onSelectUser(user.id)"
-        >
-          <div class="w-10 h-10 rounded-full bg-purple-300 flex items-center justify-center overflow-hidden">
-            @if (user.avatar) {
-              <img [src]="user.avatar" [alt]="user.name" class="w-full h-full object-cover">
-            } @else {
-              <span class="text-purple-800 font-bold text-lg">{{ user.name.charAt(0) }}</span>
-            }
-          </div>
-          <span class="text-white">{{ user.name }}</span>
+      <div
+        class="user-item"
+        [ngStyle]="{
+          'background-color':
+            tasksStore.selectedUserId() === user.id
+              ? 'var(--color-sidebar-item-active)'
+              : hoverUserId === user.id
+              ? 'var(--color-sidebar-item-hover)'
+              : 'var(--color-sidebar-bg)',
+          transition: 'background-color var(--transition-fast)'
+        }"
+        (mouseenter)="hoverUserId = user.id"
+        (mouseleave)="hoverUserId = null"
+        (click)="onSelectUser(user.id)"
+      >
+        <div class="avatar">
+          @if (user.avatar) {
+          <img
+            [src]="user.avatar"
+            [alt]="user.name"
+            class="w-full h-full object-cover"
+          />
+          } @else {
+          <span
+            style="color: var(--color-primary-800); font-weight: bold; font-size: 1.125rem;"
+            >{{ user.name.charAt(0) }}</span
+          >
+          }
         </div>
+        <span style="color: var(--color-sidebar-text);">{{ user.name }}</span>
+      </div>
       }
     </div>
   `,
-  styles: []
+  styles: [],
 })
 export class UserListComponent {
   protected readonly tasksStore = inject(TasksStoreService);
+  protected hoverUserId: string | null = null;
 
   onSelectUser(userId: string): void {
     this.tasksStore.selectUser(userId);

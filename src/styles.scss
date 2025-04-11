@@ -1,66 +1,166 @@
-
-
 /* You can add global styles to this file, and also import other style files */
+@import "./styles/themes.scss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-black text-white;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
   }
 }
 
 @layer components {
+  /* Buttons */
   .btn {
-    @apply py-2 px-4 rounded-lg font-semibold transition-colors;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    transition: background-color var(--transition-fast),
+      color var(--transition-fast), box-shadow var(--transition-fast);
   }
 
   .btn-primary {
-    @apply bg-purple-600 text-white hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50;
+    background-color: var(--color-primary-600);
+    color: var(--color-text-on-primary);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-700);
+  }
+  .btn-primary:focus {
+    box-shadow: 0 0 0 2px var(--color-primary-500);
   }
 
+  .btn-secondary {
+    background-color: var(--color-neutral-200);
+    color: var(--color-text-secondary);
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-neutral-300);
+  }
+
+  /* Cards */
   .card {
-    @apply rounded-xl p-6 shadow-lg;
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
   }
 
-  .card-dark {
-    @apply bg-purple-900/80 backdrop-blur-sm;
-  }
-
-  .card-light {
-    @apply bg-purple-200/90;
-  }
-
+  /* User List */
   .user-item {
-    @apply flex items-center space-x-3 p-3 rounded-lg hover:bg-purple-800/50 transition-colors;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    transition: background-color var(--transition-fast);
+  }
+  .user-item:hover {
+    background-color: var(--color-sidebar-item-hover);
+  }
+  .user-item.active {
+    background-color: var(--color-sidebar-item-active);
   }
 
   .avatar {
-    @apply w-10 h-10 rounded-full object-cover border-2 border-purple-400;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--color-primary-400);
   }
 
+  /* Task Card */
   .task-card {
-    @apply bg-purple-200/90 text-purple-950 rounded-xl p-6 shadow-lg;
+    background-color: var(--color-card-bg);
+    color: var(--color-text-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-card-border);
   }
 
+  /* Layout */
   .page-container {
-    @apply max-w-7xl mx-auto px-4 py-8;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--space-4);
   }
 
+  /* Header */
   .app-header {
-    @apply flex flex-col items-center justify-center py-12 text-center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+    text-align: center;
+    background-color: var(--color-header-bg);
   }
 
   .app-title {
-    @apply text-4xl font-bold text-white mt-4;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-header-text);
+    margin-top: var(--space-4);
   }
 
   .app-subtitle {
-    @apply text-lg text-purple-200 mt-2;
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-2);
   }
 
   .app-logo {
-    @apply w-20 h-20 rounded-full bg-purple-400 flex items-center justify-center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: var(--space-5);
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-accent);
+    margin-bottom: var(--space-2);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 0 2px var(--color-primary-200);
+  }
+
+  .form-error {
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
   }
 }
