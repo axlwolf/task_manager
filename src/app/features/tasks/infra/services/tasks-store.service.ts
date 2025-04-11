@@ -4,6 +4,7 @@ import {
   computed,
   inject,
   signal,
+  ViewContainerRef,
 } from '@angular/core';
 import { Task } from '../../domain/models/task.model';
 import { User } from '../../domain/models/user.model';
@@ -14,6 +15,8 @@ import { CompleteTaskUseCase } from '../../application/usecases/complete-task.us
 import { CreateTaskDto } from '../../application/dtos/task.dto';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DialogService } from '../../../../shared/services/dialog.service';
+import { TaskDialogFormComponent } from '../components/task-dialog-form/task-dialog-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +24,8 @@ import { Subject } from 'rxjs';
 export class TasksStoreService {
   private destroy$ = new Subject<void>();
   private readonly destroyRef = inject(DestroyRef);
+  private readonly dialogService = inject(DialogService);
+  private viewContainerRef: ViewContainerRef | null = null;
 
   // State
   private readonly usersSignal = signal<User[]>([]);
@@ -124,7 +129,41 @@ export class TasksStoreService {
       });
   }
 
+  /**
+   * Set the view container ref for the dialog service
+   * @param vcr The ViewContainerRef to use
+   */
+  setViewContainerRef(vcr: ViewContainerRef): void {
+    this.viewContainerRef = vcr;
+    this.dialogService.setViewContainerRef(vcr);
+  }
+
+  /**
+   * Show the add task dialog
+   */
   showAddTaskForm(): void {
+    if (!this.viewContainerRef) {
+      console.error(
+        'ViewContainerRef not set. Call setViewContainerRef first.'
+      );
+      return;
+    }
+
+    // Open the dialog with the task form component
+    const dialogRef = this.dialogService.open(TaskDialogFormComponent, {
+      title: 'Add New Task',
+      dialogClass: 'dialog-md',
+      showFooter: true,
+      hideDefaultButtons: true,
+      closeOnEscape: true,
+      closeOnBackdropClick: true,
+    });
+
+    // Handle dialog close
+    dialogRef.afterClosed.then(() => {
+      this.showTaskFormSignal.set(false);
+    });
+
     this.showTaskFormSignal.set(true);
   }
 

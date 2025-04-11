@@ -270,10 +270,17 @@ if (featureFlagsService.isEnabled("new-feature")) {
   - Use content projection for flexible component templates
 
 - **Icon System**:
-  - Use Phosphor Icons for consistent iconography
-  - Implement microinteractions through icon weight changes
+
+  - Use Feather Icons for consistent iconography
+  - Implement microinteractions through animation service and directives
   - Wrap icons in custom components for reusability
   - Use semantic icon names that describe their purpose
+
+- **Dialog Modal Pattern**:
+  - Use HTML5 dialog element for accessibility and native behavior
+  - Abstract dialog functionality into reusable components
+  - Implement microinteractions for opening/closing animations
+  - Use service-based approach for showing/hiding dialogs
 
 ### Testing Patterns
 

@@ -34,11 +34,17 @@ export class AddTaskButtonComponent {
   private readonly elementRef = inject(ElementRef);
 
   onAddTask(): void {
+    // Show the task dialog form
     this.tasksStore.showAddTaskForm();
 
     // Add animation to the icon
     const icon = this.elementRef.nativeElement.querySelector('app-icon');
     const animation = this.animationService.createRotateAnimation(500, 180);
     this.animationService.playAnimation(icon, animation);
+
+    // Add animation to the button
+    const button = this.elementRef.nativeElement.querySelector('app-button');
+    const pulseAnimation = this.animationService.createPulseAnimation(500, 1.1);
+    this.animationService.playAnimation(button, pulseAnimation);
   }
 }
