@@ -214,64 +214,6 @@
     0 4px 6px -2px rgba(14, 165, 233, 0.05);
 }
 
-// 3. Productividad Natural
-.theme-natural {
-  // Primary Colors
-  --color-primary-50: #f0f4f1;
-  --color-primary-100: #dae5de;
-  --color-primary-200: #c5d5cb;
-  --color-primary-300: #a7bfb0;
-  --color-primary-400: #89a995;
-  --color-primary-500: #6b937a;
-  --color-primary-600: #4d7c60;
-  --color-primary-700: #2d4f3a;
-  --color-primary-800: #1e3526;
-  --color-primary-900: #0f1a13;
-  --color-primary-950: #050d09;
-
-  // Background Colors
-  --color-bg-primary: #f5f1e8;
-  --color-bg-secondary: #e8e4db;
-  --color-bg-tertiary: #ffffff;
-  --color-bg-accent: #e2a890;
-
-  // Text Colors
-  --color-text-primary: #2d4f3a;
-  --color-text-secondary: #a67f65;
-  --color-text-tertiary: #c5d5cb;
-  --color-text-accent: #2d4f3a;
-  --color-text-on-primary: #ffffff;
-
-  // Border Colors
-  --color-border-light: #e8e4db;
-  --color-border-medium: #d5cfc6;
-  --color-border-accent: #e2a890;
-
-  // Component Specific
-  --color-header-bg: #2d4f3a;
-  --color-header-text: #ffffff;
-  --color-sidebar-bg: #c5d5cb;
-  --color-sidebar-text: #2d4f3a;
-  --color-sidebar-item-active: #a7bfb0;
-  --color-sidebar-item-hover: #b6cac0;
-
-  --color-card-bg: #f5f1e8;
-  --color-card-border: #e2a890;
-
-  --color-form-bg: #f5f1e8;
-  --color-form-border: #e2a890;
-  --color-input-bg: #ffffff;
-  --color-input-border: #d5cfc6;
-  --color-input-focus: #2d4f3a;
-
-  // Shadows
-  --shadow-sm: 0 1px 2px 0 rgba(166, 127, 101, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(166, 127, 101, 0.1),
-    0 2px 4px -1px rgba(166, 127, 101, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(166, 127, 101, 0.1),
-    0 4px 6px -2px rgba(166, 127, 101, 0.05);
-}
-
 // 4. Neo-Digital
 .theme-neodigital {
   // Primary Colors

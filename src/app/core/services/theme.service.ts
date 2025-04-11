@@ -13,7 +13,6 @@ export class ThemeService {
   private readonly themes: Theme[] = [
     { name: 'theme-purple', label: 'Purple (Default)' },
     { name: 'theme-dark', label: 'Dark Premium' },
-    { name: 'theme-natural', label: 'Productividad Natural' },
     { name: 'theme-neodigital', label: 'Neo-Digital' },
     { name: 'theme-gradient', label: 'Gradientes Suaves' },
     { name: 'theme-harmony', label: 'Armonía Oceánica' },
@@ -21,7 +20,7 @@ export class ThemeService {
   ];
 
   // Current theme signal
-  private readonly currentThemeSignal = signal<string>('theme-purple');
+  private readonly currentThemeSignal = signal<string>('theme-dark');
 
   // Expose readonly signal
   readonly currentTheme = this.currentThemeSignal.asReadonly();

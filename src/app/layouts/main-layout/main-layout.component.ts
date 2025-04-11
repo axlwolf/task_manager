@@ -9,12 +9,12 @@ import { HeaderComponent } from '../../shared/components/header/header.component
   template: `
     <div class="min-h-screen bg-black">
       <app-header></app-header>
-      
+
       <main class="container mx-auto py-8 px-4">
         <router-outlet></router-outlet>
       </main>
     </div>
   `,
-  styles: []
+  styles: [],
 })
 export class MainLayoutComponent {}

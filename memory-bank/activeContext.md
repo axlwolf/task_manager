@@ -47,7 +47,7 @@ The current development focus is on implementing the core functionality of the E
 4. **UI Improvements**
 
    - Implemented CSS variables for theming
-   - Created multiple theme options (7 themes total)
+   - Created multiple theme options (6 themes total)
    - Added Turquesa Fresco theme inspired by modern mobile app design
    - Developed Angular ThemeService for theme management
    - Created reactive ThemeSwitcherComponent with Angular Forms

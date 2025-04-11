@@ -5,7 +5,7 @@
 [![Active](http://img.shields.io/badge/Status-Active-green.svg)](https://github.com/flanuza/angular-v18-starter)
 [![Generic badge](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.typescriptlang.org/)
 [![Generic badge](https://img.shields.io/badge/framework-angular%2018-red.svg)](https://angular.io/)
-[![Generic badge](https://img.shields.io/badge/themes-7%20themes-purple.svg)](https://github.com/flanuza/angular-v18-starter#themes)
+[![Generic badge](https://img.shields.io/badge/themes-6%20themes-purple.svg)](https://github.com/flanuza/angular-v18-starter#themes)
 [![Generic badge](https://img.shields.io/badge/last%20updated-07--2024-blue)](https://github.com/flanuza/angular-v18-starter)
 
 ![EasyTask Logo](src/assets/logo.svg)
@@ -108,7 +108,7 @@ src/app/features/tasks/
 
 ## Themes
 
-EasyTask comes with 7 beautiful themes that can be switched at runtime:
+EasyTask comes with 6 beautiful themes that can be switched at runtime:
 
 ![EasyTask Themes](src/assets/theme-showcase.svg)
 
@@ -119,16 +119,13 @@ EasyTask comes with 7 beautiful themes that can be switched at runtime:
 3. **Armonía Oceánica** - A harmonious ocean-inspired theme
    - Soft blue background (#F0F9FF)
    - Accent colors: #0EA5E9 (sky blue) and #0369A1 (deep blue)
-4. **Productividad Natural** - Nature-inspired productivity theme
-   - Beige background (#F5F1E8)
-   - Accent colors: #2D4F3A (forest green) and #E2A890 (terracotta)
-5. **Neo-Digital** - Modern tech-inspired theme
+4. **Neo-Digital** - Modern tech-inspired theme
    - Dark blue background (#192A51)
    - Accent colors: #00B7C2 (turquoise) and #FF6B6B (coral)
-6. **Gradientes Suaves** - Soft gradient backgrounds
+5. **Gradientes Suaves** - Soft gradient backgrounds
    - Gradient background from purple to blue
    - Accent color: #FD8A8A (peach pink)
-7. **Turquesa Fresco** - Fresh mobile app inspired theme
+6. **Turquesa Fresco** - Fresh mobile app inspired theme
    - Light blue background (#F5FCFC)
    - Primary color: #2BBFB0 (turquoise)
    - Accent color: #F2994A (orange)

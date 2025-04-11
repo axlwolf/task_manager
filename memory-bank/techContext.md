@@ -26,7 +26,6 @@
     - Purple (Default)
     - Dark Premium
     - Armonía Oceánica
-    - Productividad Natural
     - Neo-Digital
     - Gradientes Suaves
     - Turquesa Fresco

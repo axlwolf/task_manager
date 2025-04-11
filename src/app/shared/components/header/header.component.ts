@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { LogoComponent } from '../logo/logo.component';
 import { ThemeSwitcherComponent } from '../theme-switcher/theme-switcher.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, LogoComponent, ThemeSwitcherComponent],
+  imports: [LogoComponent, ThemeSwitcherComponent],
   template: `
     <header
       style="background-color: var(--color-header-bg); color: var(--color-header-text);"

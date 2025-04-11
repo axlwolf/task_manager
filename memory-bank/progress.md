@@ -39,7 +39,7 @@
 - ✅ Responsive layout
 - ✅ Custom logo and branding
 - ✅ CSS variables for theming
-- ✅ Multiple theme support (7 themes total)
+- ✅ Multiple theme support (6 themes total)
 - ✅ Angular ThemeService for theme management
 - ✅ Reactive ThemeSwitcherComponent
 - ✅ Theme persistence with localStorage
