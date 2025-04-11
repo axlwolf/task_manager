@@ -1,27 +1,111 @@
-# Angular18
+# EasyTask - Enterprise Task Management
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.16.
+![EasyTask Logo](src/assets/logo.svg)
 
-## Development server
+EasyTask is a modern task management application built with Angular 18, designed to help teams manage their tasks efficiently. This project demonstrates the implementation of Clean Architecture principles in an Angular application.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- **User Management**: View and select users to manage their tasks
+- **Task Management**: Create, view, and complete tasks
+- **Modern UI**: Clean and responsive interface built with Tailwind CSS
+- **Reactive State Management**: Using Angular Signals for efficient state management
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Architecture
 
-## Build
+This project follows Clean Architecture principles with a clear separation of concerns:
+
+### Domain Layer
+
+- Contains business entities and repository interfaces
+- Independent of frameworks and UI
+
+### Application Layer
+
+- Contains use cases that orchestrate the flow of data
+- Depends only on the domain layer
+
+### Infrastructure Layer
+
+- Contains implementations of repositories, UI components, and services
+- Depends on both domain and application layers
+
+## Project Structure
+
+```
+src/app/features/tasks/
+├── domain/
+│   ├── models/
+│   │   ├── task.model.ts
+│   │   └── user.model.ts
+│   └── repositories/
+│       ├── task.repository.ts
+│       └── user.repository.ts
+├── application/
+│   ├── dtos/
+│   │   └── task.dto.ts
+│   └── usecases/
+│       ├── create-task.usecase.ts
+│       ├── complete-task.usecase.ts
+│       ├── get-tasks.usecase.ts
+│       └── get-users.usecase.ts
+└── infra/
+    ├── components/
+    │   ├── add-task-button/
+    │   ├── button/
+    │   ├── task-card/
+    │   ├── task-form/
+    │   └── user-list/
+    ├── layout/
+    │   └── tasks-layout.component.ts
+    ├── pages/
+    │   └── tasks-page.component.ts
+    ├── repositories/
+    │   ├── task-impl.repository.ts
+    │   └── user-impl.repository.ts
+    ├── services/
+    │   └── tasks-store.service.ts
+    └── tasks.routes.ts
+```
+
+## Technologies Used
+
+- **Angular 18**: Latest version of the Angular framework
+- **TypeScript**: For type-safe code
+- **Tailwind CSS**: For styling
+- **RxJS**: For reactive programming
+- **Angular Signals**: For state management
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- npm (v9 or later)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   ng serve
+   ```
+4. Navigate to `http://localhost:4200/`
+
+## Development
+
+### Development server
+
+Run `ng serve` for a dev server. The application will automatically reload if you change any of the source files.
+
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## License
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is licensed under the MIT License - see the LICENSE file for details.
