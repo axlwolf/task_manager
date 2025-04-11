@@ -1,24 +1,40 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, Input, HostListener } from '@angular/core';
+import { AnimationService } from '../services/animation.service';
 
 @Directive({
   selector: '[appHighlight]',
   standalone: true
 })
 export class HighlightDirective {
-  @Input() highlightColor = 'yellow';
-  @Input() defaultColor = '';
-  
-  constructor(private el: ElementRef) {}
-  
-  @HostListener('mouseenter') onMouseEnter() {
-    this.highlight(this.highlightColor);
+  @Input() highlightDuration: number = 1000;
+  @Input() highlightColor: string = 'rgba(var(--primary-rgb), 0.2)';
+  @Input() highlightOnHover: boolean = true;
+  @Input() highlightOnClick: boolean = false;
+
+  constructor(
+    private el: ElementRef,
+    private animationService: AnimationService
+  ) {}
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    if (this.highlightOnHover) {
+      this.highlight();
+    }
   }
-  
-  @HostListener('mouseleave') onMouseLeave() {
-    this.highlight(this.defaultColor);
+
+  @HostListener('click')
+  onClick() {
+    if (this.highlightOnClick) {
+      this.highlight();
+    }
   }
-  
-  private highlight(color: string) {
-    this.el.nativeElement.style.backgroundColor = color;
+
+  private highlight() {
+    const animation = this.animationService.createHighlightAnimation(
+      this.highlightDuration,
+      this.highlightColor
+    );
+    this.animationService.playAnimation(this.el.nativeElement, animation);
   }
 }
