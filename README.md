@@ -1,12 +1,12 @@
 # 📊 EasyTask - Enterprise Task Management
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT "MIT License")
-![GitHub repo size](https://img.shields.io/github/repo-size/flanuza/angular-v18-starter)
-[![Active](http://img.shields.io/badge/Status-Active-green.svg)](https://github.com/flanuza/angular-v18-starter)
+![GitHub repo size](https://img.shields.io/github/repo-size/axlwolf/task_manager)
+[![Active](http://img.shields.io/badge/Status-Active-green.svg)](https://github.com/axlwolf/task_manager)
 [![Generic badge](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.typescriptlang.org/)
 [![Generic badge](https://img.shields.io/badge/framework-angular%2018-red.svg)](https://angular.io/)
-[![Generic badge](https://img.shields.io/badge/themes-6%20themes-purple.svg)](https://github.com/flanuza/angular-v18-starter#themes)
-[![Generic badge](https://img.shields.io/badge/last%20updated-07--2024-blue)](https://github.com/flanuza/angular-v18-starter)
+[![Generic badge](https://img.shields.io/badge/themes-6%20themes-purple.svg)](https://github.com/axlwolf/task_manager#themes)
+[![Generic badge](https://img.shields.io/badge/last%20updated-07--2024-blue)](https://github.com/axlwolf/task_manager)
 
 ![EasyTask Logo](src/assets/logo.svg)
 
