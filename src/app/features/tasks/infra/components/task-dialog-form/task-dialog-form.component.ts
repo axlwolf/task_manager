@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// Angular 18 no longer requires CommonModule for control flow directives
 import {
   FormBuilder,
   FormGroup,
@@ -17,7 +17,6 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
   selector: 'app-task-dialog-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     IconComponent,
     PulseDirective,
@@ -42,15 +41,10 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
           class="form-input"
           placeholder="Enter task title"
           appPulse
-          [pulseOnFocus]="true"
           #titleInput
         />
-        <div
-          *ngIf="
-            taskForm.get('title')?.invalid && taskForm.get('title')?.touched
-          "
-          class="form-error"
-        >
+        @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+        <div class="form-error">
           <app-icon
             name="alert-circle"
             [size]="16"
@@ -59,6 +53,7 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
           ></app-icon>
           Title is required
         </div>
+        }
       </div>
 
       <div class="form-group">
@@ -78,7 +73,6 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
           placeholder="Enter task description"
           rows="4"
           appPulse
-          [pulseOnFocus]="true"
         ></textarea>
       </div>
 
@@ -98,14 +92,10 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
           formControlName="dueDate"
           class="form-input"
           appPulse
-          [pulseOnFocus]="true"
         />
-        <div
-          *ngIf="
-            taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched
-          "
-          class="form-error"
-        >
+        @if (taskForm.get('dueDate')?.invalid &&
+        taskForm.get('dueDate')?.touched) {
+        <div class="form-error">
           <app-icon
             name="alert-circle"
             [size]="16"
@@ -114,6 +104,7 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
           ></app-icon>
           Due date is required
         </div>
+        }
       </div>
 
       <div class="form-actions" dialog-footer>

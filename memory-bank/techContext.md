@@ -6,6 +6,7 @@
 
 - **Angular 18**: Latest version of the Angular framework
   - Standalone components
+  - Built-in control flow with @if and @for (no CommonModule needed)
   - Angular Signals for state management
   - Improved performance and developer experience
 

@@ -257,6 +257,15 @@ if (featureFlagsService.isEnabled("new-feature")) {
 
 ## Coding Patterns and Standards
 
+### Angular 18 Patterns
+
+- **Built-in Control Flow**:
+
+  - Use @if instead of \*ngIf for conditional rendering
+  - Use @for instead of \*ngFor for iterating over collections
+  - Avoid importing CommonModule in standalone components
+  - Leverage Angular 18's improved template syntax
+
 ### Component Design Patterns
 
 - **Presentational and Container Components**:
@@ -441,7 +450,8 @@ if (featureFlagsService.isEnabled("new-feature")) {
 
   - Organize code by feature rather than type
   - Keep related files close together
-  - Avoid duplicate components across directories
+  - Avoid duplicate components with similar functionality across directories
+  - Consolidate similar functionality into single, configurable components
   - Place feature-specific components in feature/infra/components
   - Place truly shared components in shared/components
 

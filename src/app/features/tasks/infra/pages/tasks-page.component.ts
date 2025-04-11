@@ -5,7 +5,7 @@ import {
   AfterViewInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// Angular 18 no longer requires CommonModule for control flow directives
 import { UserListComponent } from '../components/user-list/user-list.component';
 import { TasksListComponent } from '../components/tasks-list/tasks-list.component';
 import { TasksStoreService } from '../services/tasks-store.service';
@@ -13,7 +13,7 @@ import { TasksStoreService } from '../services/tasks-store.service';
 @Component({
   selector: 'app-tasks-page',
   standalone: true,
-  imports: [CommonModule, UserListComponent, TasksListComponent],
+  imports: [UserListComponent, TasksListComponent],
   template: `
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <!-- Sidebar with users -->
