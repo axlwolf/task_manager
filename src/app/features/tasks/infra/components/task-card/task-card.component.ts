@@ -3,11 +3,12 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Task } from '../../../domain/models/task.model';
 import { ButtonComponent } from '../button/button.component';
 import { TasksStoreService } from '../../services/tasks-store.service';
+import { IconComponent } from '../../../../../shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, ButtonComponent],
+  imports: [CommonModule, DatePipe, ButtonComponent, IconComponent],
   template: `
     <div class="task-card mb-4">
       <div class="flex justify-between items-start mb-2">
@@ -27,20 +28,14 @@ import { TasksStoreService } from '../../services/tasks-store.service';
       </div>
 
       <p class="task-date">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="inline-block h-4 w-4 mr-1"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        <app-icon
+          name="calendar"
+          [size]="16"
+          theme="secondary"
+          [animate]="true"
+          class="inline-block mr-1"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-        </svg>
+        </app-icon>
         {{ task.dueDate | date : 'MMM d, yyyy' }}
       </p>
 
@@ -48,12 +43,36 @@ import { TasksStoreService } from '../../services/tasks-store.service';
         {{ task.description }}
       </p>
 
-      <div class="flex justify-end">
+      <div class="flex justify-end space-x-2">
+        <app-icon
+          name="edit"
+          [size]="20"
+          theme="secondary"
+          [animate]="true"
+          [interactive]="true"
+          (click)="onEditTask()"
+        ></app-icon>
+
+        <app-icon
+          name="trash"
+          [size]="20"
+          theme="danger"
+          [animate]="true"
+          [interactive]="true"
+          (click)="onDeleteTask()"
+        ></app-icon>
+
         <app-button
           variant="primary"
           [disabled]="task.completed"
           (buttonClick)="onCompleteTask()"
         >
+          <app-icon
+            name="check-circle"
+            [size]="16"
+            theme="light"
+            class="inline-block mr-1"
+          ></app-icon>
           {{ task.completed ? 'Completed' : 'Complete' }}
         </app-button>
       </div>
@@ -68,5 +87,15 @@ export class TaskCardComponent {
 
   onCompleteTask(): void {
     this.tasksStore.completeTask(this.task.id);
+  }
+
+  onEditTask(): void {
+    // This will be implemented in a future update
+    console.log('Edit task:', this.task.id);
+  }
+
+  onDeleteTask(): void {
+    // This will be implemented in a future update
+    console.log('Delete task:', this.task.id);
   }
 }

@@ -19,6 +19,7 @@
 - ✅ Task card component
 - ✅ Task form component
 - ✅ Add task button component
+- ⬛ Icon system with Phosphor Icons (in progress)
 
 ### State Management
 
@@ -138,11 +139,12 @@ The UI is responsive and styled with Tailwind CSS, providing a clean and modern 
 
 ## Next Milestone Goals
 
-1. Complete task filtering and sorting functionality
-2. Implement comprehensive error handling
-3. Add loading indicators and improve UX
-4. Expand test coverage using the established testing patterns
-5. Implement unit tests for services, use cases, and repositories
-6. Set up integration testing infrastructure and implement tests for key flows
-7. Set up Cypress for E2E testing and implement tests for critical user journeys
-8. Document the architecture and component usage
+1. Complete icon system implementation with Phosphor Icons
+2. Complete task filtering and sorting functionality
+3. Implement comprehensive error handling
+4. Add loading indicators and improve UX
+5. Expand test coverage using the established testing patterns
+6. Implement unit tests for services, use cases, and repositories
+7. Set up integration testing infrastructure and implement tests for key flows
+8. Set up Cypress for E2E testing and implement tests for critical user journeys
+9. Document the architecture and component usage

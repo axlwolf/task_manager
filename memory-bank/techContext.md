@@ -21,6 +21,11 @@
 - **Tailwind CSS**: Utility-first CSS framework
   - Responsive design utilities
   - Component styling
+- **Phosphor Icons**: SVG icon library
+  - 6,000+ high-quality icons
+  - Support for microinteractions
+  - Multiple weights (regular, bold, fill, etc.)
+  - Angular-specific package (@phosphor-icons/angular)
 - **CSS Variables**: For theming support
   - Multiple theme options:
     - Purple (Default)

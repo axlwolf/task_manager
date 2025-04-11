@@ -265,8 +265,15 @@ if (featureFlagsService.isEnabled("new-feature")) {
   - Presentational components receive data via inputs and emit events
 
 - **Component Composition**:
+
   - Break down complex UIs into smaller, reusable components
   - Use content projection for flexible component templates
+
+- **Icon System**:
+  - Use Phosphor Icons for consistent iconography
+  - Implement microinteractions through icon weight changes
+  - Wrap icons in custom components for reusability
+  - Use semantic icon names that describe their purpose
 
 ### Testing Patterns
 
