@@ -41,6 +41,45 @@
     background-color: var(--color-neutral-300);
   }
 
+  /* Angular Button Components */
+  .app-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast),
+      color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+  }
+
+  .app-button:focus {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .app-button-primary {
+    background-color: var(--color-primary-600);
+    color: var(--color-text-on-primary);
+  }
+
+  .app-button-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-700);
+  }
+
+  .app-button-secondary {
+    background-color: var(--color-neutral-200);
+    color: var(--color-text-secondary);
+  }
+
+  .app-button-secondary:hover:not(:disabled) {
+    background-color: var(--color-neutral-300);
+  }
+
+  .app-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   /* Cards */
   .card {
     border-radius: var(--radius-xl);
@@ -51,6 +90,16 @@
   }
 
   /* User List */
+  .user-list-container {
+    background-color: var(--color-sidebar-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2);
+    gap: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+  }
+
   .user-item {
     display: flex;
     align-items: center;
@@ -80,8 +129,43 @@
     color: var(--color-text-primary);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     border: 1px solid var(--color-card-border);
+  }
+
+  .task-title {
+    color: var(--color-text-accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .task-date {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .task-description {
+    color: var(--color-text-primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .task-status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .task-status-badge-active {
+    background-color: var(--color-primary-200);
+    color: var(--color-text-accent);
+  }
+
+  .task-status-badge-completed {
+    background-color: var(--color-success);
+    color: white;
   }
 
   /* Layout */
@@ -90,6 +174,30 @@
     margin-left: auto;
     margin-right: auto;
     padding: var(--space-4);
+  }
+
+  /* Task Page Components */
+  .tasks-header-container {
+    background-color: var(--color-header-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+
+  .tasks-header-title {
+    color: var(--color-header-text);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .tasks-empty-container {
+    background-color: var(--color-sidebar-item-active);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+  }
+
+  .tasks-empty-text {
+    color: var(--color-header-text);
   }
 
   /* Header */

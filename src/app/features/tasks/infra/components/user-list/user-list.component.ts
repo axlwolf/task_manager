@@ -7,9 +7,7 @@ import { TasksStoreService } from '../../services/tasks-store.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div
-      style="background-color: var(--color-sidebar-bg); border-radius: var(--radius-lg); padding: var(--space-2); gap: var(--space-2); display: flex; flex-direction: column;"
-    >
+    <div class="user-list-container">
       @for (user of tasksStore.users(); track user.id) {
       <div
         class="user-item"

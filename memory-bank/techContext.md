@@ -25,15 +25,19 @@
   - Multiple theme options:
     - Purple (Default)
     - Dark Premium
-    - Minimalista Moderna
+    - Armonía Oceánica
     - Productividad Natural
     - Neo-Digital
     - Gradientes Suaves
-    - Neomorfismo
   - Consistent color palette
   - Standardized spacing and typography
   - Angular-based theme service and component
   - Theme persistence with localStorage
+  - Predefined CSS classes for themed components:
+    - `.task-card`, `.task-title`, `.task-description`, etc. for task components
+    - `.app-button`, `.app-button-primary`, etc. for buttons
+    - `.tasks-header-container`, `.tasks-empty-container`, etc. for page layouts
+  - **IMPORTANT**: Always use these predefined classes instead of inline styles
 
 ### State Management
 
@@ -88,10 +92,14 @@ src/
 │   ├── core/               # Core services, guards, interceptors
 │   ├── features/           # Feature modules
 │   │   └── tasks/          # Tasks feature
-│   │       ├── domain/     # Domain layer
-│   │       ├── application/ # Application layer
+│   │       ├── domain/     # Domain layer (models, interfaces)
+│   │       ├── application/ # Application layer (use cases)
 │   │       └── infra/      # Infrastructure layer
-│   ├── shared/             # Shared components, directives, pipes
+│   │           ├── components/  # Feature-specific components
+│   │           ├── pages/      # Page components
+│   │           ├── services/    # Implementation services
+│   │           └── repositories/ # Repository implementations
+│   ├── shared/             # Truly shared components (header, logo, theme-switcher)
 │   └── layouts/            # Layout components
 ├── assets/                 # Static assets
 └── styles/                 # Global styles
@@ -159,3 +167,52 @@ src/
 - Error tracking with Sentry (future implementation)
 - Performance monitoring with Angular DevTools
 - Usage analytics with Google Analytics (future implementation)
+
+## Code Standards
+
+### Styling and Theming Best Practices
+
+- **Use Predefined Theme Classes**: Always use the predefined CSS classes for themed components
+
+  - Task components: `.task-card`, `.task-title`, `.task-description`, etc.
+  - Button components: `.app-button`, `.app-button-primary`, etc.
+  - Page layouts: `.tasks-header-container`, `.tasks-empty-container`, etc.
+
+- **Avoid Inline Styles**: Never use inline styles in templates
+
+  ```html
+  <!-- BAD -->
+  <div style="color: var(--color-text-primary);">Content</div>
+
+  <!-- GOOD -->
+  <div class="task-description">Content</div>
+  ```
+
+- **Combine Tailwind with Theme Classes**: Use Tailwind for layout and theme classes for colors/styling
+
+### Documentation Standards
+
+- **Add JSDoc to All Public Methods and Classes**: Document the purpose, parameters, and return values
+  ```typescript
+  /**
+   * Completes a task with the given ID
+   * @param taskId - The unique identifier of the task
+   * @returns void
+   */
+  completeTask(taskId: string): void {
+    // Implementation
+  }
+  ```
+
+### Code Cleanliness
+
+- **No Console Logs in Production Code**: Remove all console.log statements before committing
+- **No Commented-Out Code**: Delete commented-out code instead of leaving it in the codebase
+- **No TODO Comments**: Create proper issues/tickets instead of TODO comments
+
+### Angular Best Practices
+
+- **Use Signals for State Management**: Prefer signals over subjects/observables for component state
+- **Use Standalone Components**: Prefer standalone components over NgModules
+- **Use Dependency Injection with inject() Function**: Prefer the inject() function over constructor injection
+- **Use OnPush Change Detection**: For better performance in complex components

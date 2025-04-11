@@ -9,32 +9,24 @@ import { TasksStoreService } from '../../services/tasks-store.service';
   standalone: true,
   imports: [CommonModule, DatePipe, ButtonComponent],
   template: `
-    <div
-      class="task-card mb-4"
-      [ngStyle]="{
-        'background-color': 'var(--color-card-bg)',
-        'border-color': 'var(--color-card-border)',
-        'box-shadow': 'var(--shadow-md)'
-      }"
-    >
+    <div class="task-card mb-4">
       <div class="flex justify-between items-start mb-2">
-        <h3 class="text-2xl font-bold" style="color: var(--color-text-accent);">
+        <h3 class="task-title">
           {{ task.title }}
         </h3>
         <span
-          class="px-2 py-1 rounded-full text-xs font-medium"
-          [ngStyle]="{
-            'background-color': task.completed
-              ? 'var(--color-success)'
-              : 'var(--color-primary-200)',
-            color: task.completed ? 'white' : 'var(--color-text-accent)'
-          }"
+          class="task-status-badge"
+          [ngClass]="
+            task.completed
+              ? 'task-status-badge-completed'
+              : 'task-status-badge-active'
+          "
         >
           {{ task.completed ? 'Completed' : 'Active' }}
         </span>
       </div>
 
-      <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
+      <p class="task-date">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="inline-block h-4 w-4 mr-1"
@@ -52,7 +44,7 @@ import { TasksStoreService } from '../../services/tasks-store.service';
         {{ task.dueDate | date : 'MMM d, yyyy' }}
       </p>
 
-      <p class="mb-6" style="color: var(--color-text-primary);">
+      <p class="task-description">
         {{ task.description }}
       </p>
 

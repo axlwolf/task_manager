@@ -134,13 +134,13 @@
   // Component Specific
   --color-header-bg: #121212;
   --color-header-text: #ffffff;
-  --color-sidebar-bg: #1e1e1e;
+  --color-sidebar-bg: #2a2a2a; /* Lighter sidebar for better contrast */
   --color-sidebar-text: #ffffff;
-  --color-sidebar-item-active: #333333;
-  --color-sidebar-item-hover: #2a2a2a;
+  --color-sidebar-item-active: #444444; /* Lighter active item */
+  --color-sidebar-item-hover: #383838; /* Lighter hover state */
 
-  --color-card-bg: #1e1e1e;
-  --color-card-border: #333333;
+  --color-card-bg: #2a2a2a; /* Lighter card background */
+  --color-card-border: #444444; /* Lighter card border */
 
   --color-form-bg: #1e1e1e;
   --color-form-border: #333333;
@@ -156,62 +156,62 @@
     0 4px 6px -2px rgba(0, 0, 0, 0.5);
 }
 
-// 2. Minimalista Moderna
-.theme-minimal {
-  // Primary Colors
-  --color-primary-50: #e6f4fc;
-  --color-primary-100: #cce9f9;
-  --color-primary-200: #99d3f3;
-  --color-primary-300: #66bded;
-  --color-primary-400: #4cb9e7;
-  --color-primary-500: #3aa8d8;
-  --color-primary-600: #2987b4;
-  --color-primary-700: #1f6a8f;
-  --color-primary-800: #154c69;
-  --color-primary-900: #0c2e44;
-  --color-primary-950: #061a27;
+// 2. Armonía Oceánica
+.theme-harmony {
+  // Primary Colors - Ocean Blues
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  --color-primary-950: #082f49;
 
-  // Background Colors
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f5f5f5;
-  --color-bg-tertiary: #ffffff;
-  --color-bg-accent: #f5f5f5;
+  // Background Colors - Soft Blues and Teals
+  --color-bg-primary: #f0f9ff;
+  --color-bg-secondary: #ecfdf5;
+  --color-bg-tertiary: #f8fafc;
+  --color-bg-accent: #e0f2fe;
 
-  // Text Colors
-  --color-text-primary: #333333;
-  --color-text-secondary: #555555;
-  --color-text-tertiary: #777777;
-  --color-text-accent: #4cb9e7;
+  // Text Colors - Deep Blues and Teals
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #1e293b;
+  --color-text-tertiary: #334155;
+  --color-text-accent: #0369a1;
   --color-text-on-primary: #ffffff;
 
-  // Border Colors
-  --color-border-light: #eeeeee;
-  --color-border-medium: #d1d1d1;
-  --color-border-accent: #4cb9e7;
+  // Border Colors - Coordinated Blues
+  --color-border-light: #bae6fd;
+  --color-border-medium: #7dd3fc;
+  --color-border-accent: #0ea5e9;
 
-  // Component Specific
-  --color-header-bg: #ffffff;
-  --color-header-text: #333333;
-  --color-sidebar-bg: #f5f5f5;
-  --color-sidebar-text: #333333;
-  --color-sidebar-item-active: #e5e5e5;
-  --color-sidebar-item-hover: #eeeeee;
+  // Component Specific - Harmonious Ocean Theme
+  --color-header-bg: #f0f9ff;
+  --color-header-text: #0f172a;
+  --color-sidebar-bg: #e0f2fe;
+  --color-sidebar-text: #0f172a;
+  --color-sidebar-item-active: #bae6fd;
+  --color-sidebar-item-hover: #e0f2fe;
 
-  --color-card-bg: #ffffff;
-  --color-card-border: #eeeeee;
+  --color-card-bg: #f8fafc;
+  --color-card-border: #bae6fd;
 
-  --color-form-bg: #f5f5f5;
-  --color-form-border: #eeeeee;
+  --color-form-bg: #f0f9ff;
+  --color-form-border: #bae6fd;
   --color-input-bg: #ffffff;
-  --color-input-border: #d1d1d1;
-  --color-input-focus: #4cb9e7;
+  --color-input-border: #7dd3fc;
+  --color-input-focus: #0ea5e9;
 
-  // Shadows
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
-    0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
-    0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  // Shadows - Soft Ocean Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(14, 165, 233, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.1),
+    0 2px 4px -1px rgba(14, 165, 233, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.1),
+    0 4px 6px -2px rgba(14, 165, 233, 0.05);
 }
 
 // 3. Productividad Natural
@@ -386,60 +386,4 @@
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-// 6. Neomorfismo
-.theme-neomorphism {
-  // Primary Colors
-  --color-primary-50: #f4fbf7;
-  --color-primary-100: #e9f7ef;
-  --color-primary-200: #d3efdf;
-  --color-primary-300: #bde7cf;
-  --color-primary-400: #a6dfbf;
-  --color-primary-500: #84dfaa;
-  --color-primary-600: #5fd28a;
-  --color-primary-700: #3bc56a;
-  --color-primary-800: #2a9e50;
-  --color-primary-900: #1f7a3d;
-  --color-primary-950: #155c2d;
-
-  // Background Colors
-  --color-bg-primary: #e6e7ee;
-  --color-bg-secondary: #f5f5f7;
-  --color-bg-tertiary: #ffffff;
-  --color-bg-accent: #d1d9e6;
-
-  // Text Colors
-  --color-text-primary: #6d7f91;
-  --color-text-secondary: #8a9aab;
-  --color-text-tertiary: #a7b4c1;
-  --color-text-accent: #84dfaa;
-  --color-text-on-primary: #ffffff;
-
-  // Border Colors
-  --color-border-light: #d1d9e6;
-  --color-border-medium: #bfc7d5;
-  --color-border-accent: #84dfaa;
-
-  // Component Specific
-  --color-header-bg: #e6e7ee;
-  --color-header-text: #6d7f91;
-  --color-sidebar-bg: #e6e7ee;
-  --color-sidebar-text: #6d7f91;
-  --color-sidebar-item-active: #d1d9e6;
-  --color-sidebar-item-hover: #dfe3ed;
-
-  --color-card-bg: #e6e7ee;
-  --color-card-border: #e6e7ee;
-
-  --color-form-bg: #e6e7ee;
-  --color-form-border: #e6e7ee;
-  --color-input-bg: #e6e7ee;
-  --color-input-border: #d1d9e6;
-  --color-input-focus: #84dfaa;
-
-  // Shadows - special for neomorphism
-  --shadow-sm: 3px 3px 6px #d1d9e6, -3px -3px 6px #ffffff;
-  --shadow-md: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
-  --shadow-lg: 10px 10px 20px #d1d9e6, -10px -10px 20px #ffffff;
 }

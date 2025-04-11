@@ -1,4 +1,12 @@
-# EasyTask - Enterprise Task Management
+# 📊 EasyTask - Enterprise Task Management
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT "MIT License")
+![GitHub repo size](https://img.shields.io/github/repo-size/flanuza/angular-v18-starter)
+[![Active](http://img.shields.io/badge/Status-Active-green.svg)](https://github.com/flanuza/angular-v18-starter)
+[![Generic badge](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.typescriptlang.org/)
+[![Generic badge](https://img.shields.io/badge/framework-angular%2018-red.svg)](https://angular.io/)
+[![Generic badge](https://img.shields.io/badge/themes-6%20themes-purple.svg)](https://github.com/flanuza/angular-v18-starter#themes)
+[![Generic badge](https://img.shields.io/badge/last%20updated-07--2024-blue)](https://github.com/flanuza/angular-v18-starter)
 
 ![EasyTask Logo](src/assets/logo.svg)
 
@@ -100,7 +108,7 @@ src/app/features/tasks/
 
 ## Themes
 
-EasyTask comes with 7 beautiful themes that can be switched at runtime:
+EasyTask comes with 6 beautiful themes that can be switched at runtime:
 
 ![EasyTask Themes](src/assets/theme-showcase.svg)
 
@@ -108,9 +116,9 @@ EasyTask comes with 7 beautiful themes that can be switched at runtime:
 2. **Dark Premium** - A dark theme with purple/lila accents
    - Dark background (#121212)
    - Accent color: #A66CFF
-3. **Minimalista Moderna** - A clean, minimalist theme
-   - White background (#FFFFFF)
-   - Accent color: #4CB9E7 (light blue)
+3. **Armonía Oceánica** - A harmonious ocean-inspired theme
+   - Soft blue background (#F0F9FF)
+   - Accent colors: #0EA5E9 (sky blue) and #0369A1 (deep blue)
 4. **Productividad Natural** - Nature-inspired productivity theme
    - Beige background (#F5F1E8)
    - Accent colors: #2D4F3A (forest green) and #E2A890 (terracotta)
@@ -120,9 +128,6 @@ EasyTask comes with 7 beautiful themes that can be switched at runtime:
 6. **Gradientes Suaves** - Soft gradient backgrounds
    - Gradient background from purple to blue
    - Accent color: #FD8A8A (peach pink)
-7. **Neomorfismo** - Soft shadows and 3D effects
-   - Pearl gray background (#E6E7EE)
-   - Accent color: #84DFAA (mint)
 
 Themes are managed by the `ThemeService` and can be switched using the theme selector in the application header.
 
