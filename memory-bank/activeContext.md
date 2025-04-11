@@ -48,6 +48,7 @@ The current development focus is on implementing the core functionality of the E
 
    - Implemented CSS variables for theming
    - Created multiple theme options (7 themes total)
+   - Added Turquesa Fresco theme inspired by modern mobile app design
    - Developed Angular ThemeService for theme management
    - Created reactive ThemeSwitcherComponent with Angular Forms
    - Implemented theme persistence with localStorage

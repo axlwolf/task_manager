@@ -5,7 +5,7 @@
 [![Active](http://img.shields.io/badge/Status-Active-green.svg)](https://github.com/flanuza/angular-v18-starter)
 [![Generic badge](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.typescriptlang.org/)
 [![Generic badge](https://img.shields.io/badge/framework-angular%2018-red.svg)](https://angular.io/)
-[![Generic badge](https://img.shields.io/badge/themes-6%20themes-purple.svg)](https://github.com/flanuza/angular-v18-starter#themes)
+[![Generic badge](https://img.shields.io/badge/themes-7%20themes-purple.svg)](https://github.com/flanuza/angular-v18-starter#themes)
 [![Generic badge](https://img.shields.io/badge/last%20updated-07--2024-blue)](https://github.com/flanuza/angular-v18-starter)
 
 ![EasyTask Logo](src/assets/logo.svg)
@@ -108,7 +108,7 @@ src/app/features/tasks/
 
 ## Themes
 
-EasyTask comes with 6 beautiful themes that can be switched at runtime:
+EasyTask comes with 7 beautiful themes that can be switched at runtime:
 
 ![EasyTask Themes](src/assets/theme-showcase.svg)
 
@@ -128,6 +128,10 @@ EasyTask comes with 6 beautiful themes that can be switched at runtime:
 6. **Gradientes Suaves** - Soft gradient backgrounds
    - Gradient background from purple to blue
    - Accent color: #FD8A8A (peach pink)
+7. **Turquesa Fresco** - Fresh mobile app inspired theme
+   - Light blue background (#E5F4F6)
+   - Primary color: #26C6C4 (turquoise)
+   - Accent color: #F89B55 (orange)
 
 Themes are managed by the `ThemeService` and can be switched using the theme selector in the application header.
 

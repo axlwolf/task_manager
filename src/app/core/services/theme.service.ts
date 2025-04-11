@@ -17,6 +17,7 @@ export class ThemeService {
     { name: 'theme-neodigital', label: 'Neo-Digital' },
     { name: 'theme-gradient', label: 'Gradientes Suaves' },
     { name: 'theme-harmony', label: 'Armonía Oceánica' },
+    { name: 'theme-turquesa-fresco', label: 'Turquesa Fresco' },
   ];
 
   // Current theme signal

@@ -387,3 +387,66 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
+
+/* Turquesa Fresco Theme */
+.theme-turquesa-fresco {
+  // Primary colors
+  --color-primary-50: #e5f7f7;
+  --color-primary-100: #c2f0ef;
+  --color-primary-200: #9ee8e7;
+  --color-primary-300: #6ddedd;
+  --color-primary-400: #3ed4d3;
+  --color-primary-500: #26c6c4;
+  --color-primary-600: #1ea3a1;
+  --color-primary-700: #17807e;
+  --color-primary-800: #115d5c;
+  --color-primary-900: #0a3a39;
+
+  // Background colors
+  --color-bg-primary: #e5f4f6;
+  --color-bg-secondary: #f8fdfd;
+  --color-bg-tertiary: #ffffff;
+
+  // Text colors
+  --color-text-primary: #333333;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --color-text-inverted: #ffffff;
+
+  // Accent colors (orange)
+  --color-accent-50: #fff8f1;
+  --color-accent-100: #feecdc;
+  --color-accent-200: #fcd9b8;
+  --color-accent-300: #fbc093;
+  --color-accent-400: #f9a66f;
+  --color-accent-500: #f89b55;
+  --color-accent-600: #e67e37;
+  --color-accent-700: #c45a1b;
+  --color-accent-800: #9c4311;
+  --color-accent-900: #7c3009;
+
+  // Status colors
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #f56a6a;
+  --color-info: #3b82f6;
+
+  // Border colors
+  --color-border-light: #e2e8f0;
+  --color-border-medium: #cbd5e1;
+  --color-border-dark: #94a3b8;
+
+  // Form elements
+  --color-input-bg: #ffffff;
+  --color-input-text: #333333;
+  --color-input-placeholder: #9ca3af;
+  --color-input-border: #d1d5db;
+  --color-input-focus: #26c6c4;
+
+  // Shadows with turquoise tint
+  --shadow-sm: 0 1px 2px 0 rgba(38, 198, 196, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(38, 198, 196, 0.1),
+    0 2px 4px -1px rgba(38, 198, 196, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(38, 198, 196, 0.1),
+    0 4px 6px -2px rgba(38, 198, 196, 0.05);
+}

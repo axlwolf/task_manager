@@ -29,6 +29,7 @@
     - Productividad Natural
     - Neo-Digital
     - Gradientes Suaves
+    - Turquesa Fresco
   - Consistent color palette
   - Standardized spacing and typography
   - Angular-based theme service and component
