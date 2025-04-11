@@ -179,6 +179,82 @@ export class TasksStoreService {
 - Efficient change detection with signals
 - Minimal component re-rendering
 
+## Development Workflow
+
+### Trunk-Based Development
+
+EasyTask follows Trunk-Based Development (TBD) principles for version control:
+
+- Development primarily happens on a single branch (`main`)
+- Features are developed in short-lived feature branches
+- Changes are integrated frequently to the trunk (daily or more often)
+- The trunk is always kept in a deployable state
+- Feature flags are used to hide incomplete features
+
+#### Workflow Steps
+
+1. **Feature Development**
+
+   - Create a feature branch from the trunk
+
+   ```bash
+   git checkout main
+   git pull
+   git checkout -b feature/descriptive-name
+   ```
+
+   - Develop in small, incremental changes
+   - Commit frequently with descriptive messages
+
+2. **Keeping Current**
+
+   - Regularly update feature branches with changes from trunk
+
+   ```bash
+   git checkout main
+   git pull
+   git checkout feature/descriptive-name
+   git rebase main
+   ```
+
+   - Resolve conflicts in the feature branch, not in trunk
+
+3. **Integration**
+
+   - Create a Pull Request for code review
+   - Ensure tests pass before merging
+   - After approval, merge to trunk
+   - Delete the feature branch after merging
+
+4. **Branch Naming Conventions**
+
+   - Feature branches: `feature/descriptive-name`
+   - Bug fixes: `fix/bug-description`
+   - Refactoring: `refactor/description`
+   - Documentation: `docs/description`
+
+5. **Commit Message Format**
+
+   - Follow conventional commits with cardinal numbering
+   - Format: `type: description (#number)`
+   - Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+   - Example: `feat: add theme switcher component (#42)`
+   - Maintain sequential numbering across all commits
+   - Continue the established numbering convention from previous commits
+
+### Feature Flags
+
+For integrating incomplete features without affecting users:
+
+```typescript
+// Example of feature flag usage
+if (featureFlagsService.isEnabled("new-feature")) {
+  // New feature code
+} else {
+  // Existing code
+}
+```
+
 ## Coding Patterns and Standards
 
 ### Component Design Patterns

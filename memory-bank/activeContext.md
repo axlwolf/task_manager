@@ -67,11 +67,18 @@ The current development focus is on implementing the core functionality of the E
    - Set up mock data for development
 
 6. **Project Structure Improvements**
+
    - Eliminated duplicate components (tasks-page, user-list, task-form, task-card, task-list, button)
    - Removed redundant routes file
    - Consolidated components in appropriate directories following Clean Architecture
    - Improved organization by removing empty directories
    - Simplified shared components to only include truly shared elements
+
+7. **Development Workflow**
+   - Implemented Trunk-Based Development workflow
+   - Established branch naming conventions (feature/, fix/, refactor/, docs/)
+   - Defined commit message format with conventional commits and numbering
+   - Created guidelines for feature branch lifecycle and integration
 
 ## Next Steps
 
@@ -94,9 +101,18 @@ The current development focus is on implementing the core functionality of the E
    - Implement end-to-end testing
 
 4. **Documentation**
+
    - Complete inline code documentation
    - Create architecture diagrams
    - Write developer guides
+
+5. **Development Workflow Improvements**
+
+   - Implement Feature Flags service for hiding incomplete features
+   - Configure GitHub branch protection rules for the main branch
+   - Set up GitHub Actions for Continuous Integration
+   - Create pull request templates with checklists
+   - Implement automated code quality checks
 
 ## Active Decisions and Considerations
 
@@ -117,6 +133,15 @@ The current development focus is on implementing the core functionality of the E
    - Considering caching strategies
 
 4. **Styling Approach**
+
    - Using Tailwind CSS for utility-first styling
    - Maintaining consistent design language
    - Ensuring accessibility compliance
+
+5. **Development Workflow**
+
+   - Implementing Trunk-Based Development for faster integration
+   - Considering team size and collaboration patterns
+   - Evaluating the need for feature flags vs. feature branches
+   - Planning CI/CD pipeline to support the workflow
+   - Balancing frequent integration with stability
