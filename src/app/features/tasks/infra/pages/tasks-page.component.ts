@@ -3,16 +3,12 @@ import {
   inject,
   ViewContainerRef,
   AfterViewInit,
-  ElementRef,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserListComponent } from '../components/user-list/user-list.component';
-import { TaskFormComponent } from '../components/task-form/task-form.component';
 import { TasksListComponent } from '../components/tasks-list/tasks-list.component';
 import { TasksStoreService } from '../services/tasks-store.service';
-import { DialogComponent } from '../../../../shared/components/dialog/dialog.component';
-import { TaskDialogFormComponent } from '../components/task-dialog-form/task-dialog-form.component';
 
 @Component({
   selector: 'app-tasks-page',
@@ -41,10 +37,9 @@ export class TasksPageComponent implements AfterViewInit {
   private dialogContainer!: ViewContainerRef;
 
   protected readonly tasksStore = inject(TasksStoreService);
-  private readonly viewContainerRef = inject(ViewContainerRef);
 
   ngAfterViewInit(): void {
     // Set the view container ref for the dialog service
-    this.tasksStore.setViewContainerRef(this.viewContainerRef);
+    this.tasksStore.setViewContainerRef(this.dialogContainer);
   }
 }

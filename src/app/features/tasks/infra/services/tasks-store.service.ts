@@ -32,14 +32,12 @@ export class TasksStoreService {
   private readonly tasksSignal = signal<Task[]>([]);
   private readonly selectedUserIdSignal = signal<string | null>(null);
   private readonly loadingSignal = signal<boolean>(false);
-  private readonly showTaskFormSignal = signal<boolean>(false);
 
   // Selectors
   readonly users = this.usersSignal.asReadonly();
   readonly tasks = this.tasksSignal.asReadonly();
   readonly selectedUserId = this.selectedUserIdSignal.asReadonly();
   readonly loading = this.loadingSignal.asReadonly();
-  readonly showTaskForm = this.showTaskFormSignal.asReadonly();
 
   readonly selectedUser = computed(() => {
     const userId = this.selectedUserIdSignal();
@@ -107,7 +105,6 @@ export class TasksStoreService {
         next: (newTask) => {
           this.tasksSignal.update((tasks) => [...tasks, newTask]);
           this.loadingSignal.set(false);
-          this.showTaskFormSignal.set(false);
         },
         error: () => this.loadingSignal.set(false),
       });
@@ -150,7 +147,7 @@ export class TasksStoreService {
     }
 
     // Open the dialog with the task form component
-    const dialogRef = this.dialogService.open(TaskDialogFormComponent, {
+    this.dialogService.open(TaskDialogFormComponent, {
       title: 'Add New Task',
       dialogClass: 'dialog-md',
       showFooter: true,
@@ -158,16 +155,5 @@ export class TasksStoreService {
       closeOnEscape: true,
       closeOnBackdropClick: true,
     });
-
-    // Handle dialog close
-    dialogRef.afterClosed.then(() => {
-      this.showTaskFormSignal.set(false);
-    });
-
-    this.showTaskFormSignal.set(true);
-  }
-
-  hideTaskForm(): void {
-    this.showTaskFormSignal.set(false);
   }
 }
