@@ -145,18 +145,23 @@ export class TasksStoreService {
       return;
     }
 
-    // Open the dialog with the task form component
-    this.dialogService.open(
-      TaskDialogFormComponent,
-      {
-        title: '',
-        size: 'md',
-        showFooter: false,
-        hideDefaultButtons: true,
-        closeOnEscape: true,
-        closeOnBackdropClick: false,
-      },
-      this.viewContainerRef
+    // Create the task form component directly
+    const componentRef = this.viewContainerRef.createComponent(
+      TaskDialogFormComponent
     );
+    const taskFormInstance = componentRef.instance;
+
+    // Subscribe to dialog events
+    taskFormInstance.taskCreated.subscribe((task: any) => {
+      // The task is already created in the component, no need to do anything here
+      componentRef.destroy();
+    });
+
+    taskFormInstance.dialogClosed.subscribe(() => {
+      componentRef.destroy();
+    });
+
+    // Open the dialog
+    taskFormInstance.open();
   }
 }

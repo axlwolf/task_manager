@@ -1,4 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 // Angular 18 no longer requires CommonModule for control flow directives
 import {
   FormBuilder,
@@ -12,7 +21,6 @@ import { IconComponent } from '../../../../../shared/components/icon/icon.compon
 import { PulseDirective } from '../../../../../shared/directives/pulse.directive';
 import { BounceDirective } from '../../../../../shared/directives/bounce.directive';
 import { AnimationService } from '../../../../../shared/services/animation.service';
-import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
 
 @Component({
   selector: 'app-task-dialog-form',
@@ -24,97 +32,100 @@ import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
     BounceDirective,
   ],
   template: `
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
-      <h1 class="dialog-title">Add Task</h1>
+    <dialog #dialogElement class="task-dialog">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+        <h1 class="dialog-title">Add Task</h1>
 
-      <div class="form-group">
-        <label for="title" class="form-label">Title</label>
-        <input
-          type="text"
-          id="title"
-          formControlName="title"
-          class="form-input"
-          placeholder="Enter task title"
-          appPulse
-          #titleInput
-        />
-        @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
-        <div class="form-error">
-          <app-icon
-            name="alert-circle"
-            [size]="16"
-            theme="danger"
-            class="mr-1"
-          ></app-icon>
-          Title is required
-        </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="description" class="form-label">Summary</label>
-        <textarea
-          id="description"
-          formControlName="description"
-          class="form-input form-textarea"
-          placeholder="Enter task summary"
-          rows="6"
-          appPulse
-        ></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="dueDate" class="form-label">Due Date</label>
-        <div class="date-input-container">
+        <div class="form-group">
+          <label for="title" class="form-label">Title</label>
           <input
-            type="date"
-            id="dueDate"
-            formControlName="dueDate"
-            class="form-input date-input"
-            placeholder="dd.mm.yyyy"
+            type="text"
+            id="title"
+            formControlName="title"
+            class="form-input"
+            placeholder="Enter task title"
             appPulse
+            #titleInput
           />
-          <app-icon
-            name="calendar"
-            [size]="20"
-            theme="secondary"
-            class="date-icon"
-          ></app-icon>
+          @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched)
+          {
+          <div class="form-error">
+            <app-icon
+              name="alert-circle"
+              [size]="16"
+              theme="danger"
+              class="mr-1"
+            ></app-icon>
+            Title is required
+          </div>
+          }
         </div>
-        @if (taskForm.get('dueDate')?.invalid &&
-        taskForm.get('dueDate')?.touched) {
-        <div class="form-error">
-          <app-icon
-            name="alert-circle"
-            [size]="16"
-            theme="danger"
-            class="mr-1"
-          ></app-icon>
-          Due date is required
-        </div>
-        }
-      </div>
 
-      <div class="form-actions">
-        <button
-          type="button"
-          class="cancel-button"
-          (click)="onCancel()"
-          appPulse
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          class="create-button"
-          [disabled]="taskForm.invalid"
-          appBounce
-          [bounceOnClick]="true"
-        >
-          Create
-        </button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="description" class="form-label">Summary</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-input form-textarea"
+            placeholder="Enter task summary"
+            rows="6"
+            appPulse
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="dueDate" class="form-label">Due Date</label>
+          <div class="date-input-container">
+            <input
+              type="date"
+              id="dueDate"
+              formControlName="dueDate"
+              class="form-input date-input"
+              placeholder="dd.mm.yyyy"
+              appPulse
+            />
+            <app-icon
+              name="calendar"
+              [size]="20"
+              theme="secondary"
+              class="date-icon"
+            ></app-icon>
+          </div>
+          @if (taskForm.get('dueDate')?.invalid &&
+          taskForm.get('dueDate')?.touched) {
+          <div class="form-error">
+            <app-icon
+              name="alert-circle"
+              [size]="16"
+              theme="danger"
+              class="mr-1"
+            ></app-icon>
+            Due date is required
+          </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="onCancel()"
+            appPulse
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="create-button"
+            [disabled]="taskForm.invalid"
+            appBounce
+            [bounceOnClick]="true"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </dialog>
   `,
   styles: [
     `
@@ -125,6 +136,25 @@ import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
         --form-input-text: #333;
         --form-button-bg: #b69edf;
         --form-button-text: #333;
+        display: block;
+      }
+
+      .task-dialog {
+        padding: 0;
+        border: none;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-lg);
+        background-color: transparent;
+        color: var(--form-text-color);
+        max-width: 90vw;
+        width: 500px;
+        max-height: 90vh;
+        overflow: hidden;
+      }
+
+      .task-dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
       }
 
       .task-form {
@@ -266,17 +296,64 @@ import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
     `,
   ],
 })
-export class TaskDialogFormComponent implements OnInit {
+export class TaskDialogFormComponent implements OnInit, AfterViewInit {
   taskForm!: FormGroup;
+  @ViewChild('dialogElement') dialogElement!: ElementRef<HTMLDialogElement>;
+
+  @Output() taskCreated = new EventEmitter<any>();
+  @Output() dialogClosed = new EventEmitter<void>();
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly tasksStore = inject(TasksStoreService);
   private readonly createTaskUseCase = inject(CreateTaskUseCase);
   private readonly animationService = inject(AnimationService);
-  private readonly dialogRef = inject(DialogRef);
+  private dialogClosing = false;
+
+  ngAfterViewInit(): void {
+    // Add animation class when the dialog is shown
+    this.dialogElement.nativeElement.addEventListener('show', () => {
+      this.dialogElement.nativeElement.classList.add('dialog-enter');
+    });
+  }
+
+  open(): void {
+    if (!this.dialogElement) return;
+
+    const dialog = this.dialogElement.nativeElement;
+
+    // Reset animation classes
+    dialog.classList.remove('dialog-exit');
+    dialog.classList.add('dialog-enter');
+
+    // Show the dialog
+    if (!dialog.open) {
+      dialog.showModal();
+    }
+  }
+
+  close(result?: any): void {
+    if (!this.dialogElement || this.dialogClosing) return;
+
+    this.dialogClosing = true;
+    const dialog = this.dialogElement.nativeElement;
+
+    // Add exit animation
+    dialog.classList.remove('dialog-enter');
+    dialog.classList.add('dialog-exit');
+
+    // Wait for animation to complete before closing
+    setTimeout(() => {
+      dialog.close();
+      this.dialogClosed.emit();
+      this.dialogClosing = false;
+      if (result) {
+        this.taskCreated.emit(result);
+      }
+    }, 150); // Match the animation duration
+  }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.close();
   }
 
   ngOnInit(): void {
@@ -336,7 +413,7 @@ export class TaskDialogFormComponent implements OnInit {
     }
 
     // Close the dialog after successful submission
-    this.dialogRef.close(task);
+    this.close(task);
   }
 
   private formatDate(date: Date): string {
