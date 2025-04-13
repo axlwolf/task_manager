@@ -10,7 +10,6 @@ import {
   inject,
   HostListener,
 } from '@angular/core';
-// Angular 18 no longer requires CommonModule for control flow directives
 import { AnimationService } from '../../services/animation.service';
 
 @Component({
@@ -269,29 +268,39 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   private readonly animationService = inject(AnimationService);
   private dialogClosing = false;
 
+  private onShowListener = () => {
+    this.dialogElement.nativeElement.classList.add('dialog-enter');
+  };
+
+  private onClickListener = (event: MouseEvent) => {
+    if (
+      this.closeOnBackdropClick &&
+      event.target === this.dialogElement.nativeElement
+    ) {
+      this.close();
+    }
+  };
+
   ngAfterViewInit(): void {
     // Add animation class when the dialog is shown
-    this.dialogElement.nativeElement.addEventListener('show', () => {
-      this.dialogElement.nativeElement.classList.add('dialog-enter');
-    });
+    this.dialogElement.nativeElement.addEventListener(
+      'show',
+      this.onShowListener
+    );
 
     // Handle backdrop click
-    this.dialogElement.nativeElement.addEventListener('click', (event) => {
-      if (
-        this.closeOnBackdropClick &&
-        event.target === this.dialogElement.nativeElement
-      ) {
-        this.close();
-      }
-    });
+    this.dialogElement.nativeElement.addEventListener(
+      'click',
+      this.onClickListener
+    );
   }
 
   ngOnDestroy(): void {
     // Clean up any event listeners if needed
     if (this.dialogElement?.nativeElement) {
       const dialog = this.dialogElement.nativeElement;
-      dialog.removeEventListener('show', () => {});
-      dialog.removeEventListener('click', () => {});
+      dialog.removeEventListener('show', this.onShowListener);
+      dialog.removeEventListener('click', this.onClickListener);
     }
   }
 

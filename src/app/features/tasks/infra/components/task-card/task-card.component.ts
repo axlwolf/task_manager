@@ -59,24 +59,6 @@ import { AnimationService } from '../../../../../shared/services/animation.servi
       </p>
 
       <div class="flex justify-end space-x-2">
-        <app-icon
-          name="edit"
-          [size]="20"
-          theme="secondary"
-          [animate]="true"
-          [interactive]="true"
-          (click)="onEditTask()"
-        ></app-icon>
-
-        <app-icon
-          name="trash"
-          [size]="20"
-          theme="danger"
-          [animate]="true"
-          [interactive]="true"
-          (click)="onDeleteTask()"
-        ></app-icon>
-
         <app-button
           variant="primary"
           [disabled]="task.completed"

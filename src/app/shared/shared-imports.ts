@@ -1,9 +1,9 @@
 /**
  * Archivo centralizado para importar componentes compartidos
- * 
+ *
  * Importa este archivo en tus componentes standalone en lugar
  * de importar SharedModule.
- * 
+ *
  * Ejemplo:
  * ```typescript
  * @Component({
@@ -35,8 +35,7 @@ import { SlideDirective } from './directives/slide.directive';
 // Pipes
 import { TruncatePipe } from './pipes/truncate.pipe';
 
-// Otros módulos que aún necesitamos (irán desapareciendo a medida que migremos más componentes)
-import { IconsModule } from './modules/icons.module';
+// No more modules needed as we've migrated to standalone components
 
 // Importaciones comunes
 import { CommonModule } from '@angular/common';
@@ -51,14 +50,14 @@ export const SHARED_IMPORTS = [
   CommonModule,
   RouterModule,
   ReactiveFormsModule,
-  
+
   // Componentes standalone
   IconComponent,
   DialogComponent,
   HeaderComponent,
   LogoComponent,
   ThemeSwitcherComponent,
-  
+
   // Directivas standalone
   HighlightDirective,
   BounceDirective,
@@ -67,12 +66,9 @@ export const SHARED_IMPORTS = [
   FadeDirective,
   RotateDirective,
   SlideDirective,
-  
+
   // Pipes standalone
   TruncatePipe,
-  
-  // Módulos restantes (por migrar)
-  IconsModule
 ] as Type<any>[];
 
 /**
@@ -83,7 +79,7 @@ export const STANDALONE_COMPONENTS = [
   DialogComponent,
   HeaderComponent,
   LogoComponent,
-  ThemeSwitcherComponent
+  ThemeSwitcherComponent,
 ];
 
 /**
@@ -96,12 +92,10 @@ export const STANDALONE_DIRECTIVES = [
   ShakeDirective,
   FadeDirective,
   RotateDirective,
-  SlideDirective
+  SlideDirective,
 ];
 
 /**
  * Pipes standalone disponibles para el proyecto
  */
-export const STANDALONE_PIPES = [
-  TruncatePipe
-];
+export const STANDALONE_PIPES = [TruncatePipe];

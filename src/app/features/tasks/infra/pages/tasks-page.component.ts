@@ -5,7 +5,6 @@ import {
   AfterViewInit,
   ViewChild,
 } from '@angular/core';
-// Angular 18 no longer requires CommonModule for control flow directives
 import { UserListComponent } from '../components/user-list/user-list.component';
 import { TasksListComponent } from '../components/tasks-list/tasks-list.component';
 import { TasksStoreService } from '../services/tasks-store.service';
@@ -27,11 +26,8 @@ import { TasksStoreService } from '../services/tasks-store.service';
       </div>
     </div>
 
-    <!-- Container for dialogs - make sure it's visible and accessible -->
-    <div
-      #dialogContainer
-      style="position: fixed; top: 0; left: 0; z-index: 1000;"
-    ></div>
+    <!-- Container for dialogs -->
+    <div #dialogContainer></div>
   `,
   styles: [],
 })
@@ -43,6 +39,8 @@ export class TasksPageComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     // Set the view container ref for the dialog service
-    this.tasksStore.setViewContainerRef(this.dialogContainer);
+    if (this.dialogContainer) {
+      this.tasksStore.setViewContainerRef(this.dialogContainer);
+    }
   }
 }

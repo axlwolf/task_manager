@@ -145,8 +145,7 @@ export class TasksStoreService {
       return;
     }
 
-    // Usar el DialogService para abrir el diálogo
-    console.log('Opening dialog using DialogService...');
+    // Use the DialogService to open the dialog
     const dialogRef = this.dialogService.open(
       TaskDialogFormComponent,
       {
@@ -161,14 +160,9 @@ export class TasksStoreService {
       this.viewContainerRef
     );
 
-    // Suscribirse al evento de cierre del diálogo
-    dialogRef.afterClosed$.subscribe((result: CreateTaskDto | boolean | undefined) => {
-      // Si se cerró con un resultado, significa que se creó una tarea
-      if (result && result !== true) {
-        // No necesitamos hacer nada aquí ya que el componente
-        // TaskDialogFormComponent ya llama a this.tasksStore.createTask()
-        console.log('Task created:', result);
-      }
+    // Subscribe to the dialog close event
+    dialogRef.afterClosed$.subscribe(() => {
+      // The TaskDialogFormComponent already calls this.tasksStore.createTask()
     });
   }
 }

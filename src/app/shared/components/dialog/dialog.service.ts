@@ -3,8 +3,6 @@ import {
   Type,
   ViewContainerRef,
   createComponent,
-  inject,
-  EnvironmentInjector,
   Injector,
 } from '@angular/core';
 import { DialogComponent } from './dialog.component';
@@ -14,36 +12,22 @@ import { DialogRef } from './dialog-ref';
   providedIn: 'root',
 })
 export class DialogService {
-  // Inyectar el EnvironmentInjector en el constructor
-  private readonly environmentInjector = inject(EnvironmentInjector);
-  private readonly injector = inject(Injector);
+  constructor(private injector: Injector) {}
 
-  /**
-   * Opens a dialog with the specified component as content.
-   * @param component The component to render inside the dialog.
-   * @param config Configuration options for the dialog.
-   * @param viewContainerRef The view container ref to create the dialog in.
-   * @returns A reference to the dialog.
-   */
   open<T>(
     component: Type<T>,
     config: DialogConfig = {},
     viewContainerRef: ViewContainerRef
   ): DialogRef {
-    // Create a new DialogRef for this dialog instance
+    // Create a new DialogRef
     const dialogRef = new DialogRef();
 
     // Create the dialog component
-    const dialogComponentRef = viewContainerRef.createComponent(
-      DialogComponent,
-      {
-        projectableNodes: [],
-        injector: this.injector,
-      }
-    );
-
-    // Set dialog properties from config
+    const dialogComponentRef =
+      viewContainerRef.createComponent(DialogComponent);
     const dialogInstance = dialogComponentRef.instance;
+
+    // Configure the dialog
     if (config.title) dialogInstance.title = config.title;
     if (config.size) dialogInstance.dialogClass = `dialog-${config.size}`;
     if (config.showFooter !== undefined)
@@ -57,15 +41,23 @@ export class DialogService {
     if (config.closeOnBackdropClick !== undefined)
       dialogInstance.closeOnBackdropClick = config.closeOnBackdropClick;
 
-    // Create the content component inside the dialog
-    const contentComponentRef = createComponent(component, {
-      environmentInjector: this.environmentInjector,
-      hostElement:
-        dialogComponentRef.location.nativeElement.querySelector('.dialog-body'),
-    });
+    // Get the dialog body element
+    const dialogBody =
+      dialogComponentRef.location.nativeElement.querySelector('.dialog-body');
 
-    // Provide the DialogRef to the content component
-    (contentComponentRef.instance as any).dialogRef = dialogRef;
+    // Create the content component if the dialog body is available
+    if (dialogBody) {
+      // Workaround for type compatibility
+      const anyInjector = this.injector as any;
+
+      const contentComponentRef = createComponent(component, {
+        environmentInjector: anyInjector,
+        hostElement: dialogBody,
+      });
+
+      // Provide the DialogRef to the content component
+      (contentComponentRef.instance as any).dialogRef = dialogRef;
+    }
 
     // Handle dialog events
     dialogInstance.dialogClose.subscribe(() => {
@@ -78,21 +70,20 @@ export class DialogService {
       dialogComponentRef.destroy();
     });
 
-    // Subscribe to the afterClosed observable to clean up when the dialog is closed
+    // Clean up when the dialog is closed
     dialogRef.afterClosed$.subscribe(() => {
       dialogComponentRef.destroy();
     });
 
-    // Open the dialog
-    dialogInstance.open();
+    // Open the dialog after a small delay to ensure DOM is updated
+    setTimeout(() => {
+      dialogInstance.open();
+    }, 0);
 
     return dialogRef;
   }
 }
 
-/**
- * Configuration options for the dialog.
- */
 export interface DialogConfig {
   title?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
