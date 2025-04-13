@@ -280,17 +280,20 @@ if (featureFlagsService.isEnabled("new-feature")) {
 
 - **Icon System**:
 
-  - Use Feather Icons for consistent iconography
+  - Use Phosphor Icons for consistent iconography
   - Implement microinteractions through animation service and directives
   - Wrap icons in custom components for reusability
   - Use semantic icon names that describe their purpose
 
-- **Dialog Modal Pattern**:
+- **Dialog System Pattern**:
   - Use HTML5 dialog element for accessibility and native behavior
   - Abstract dialog functionality into reusable components
   - Implement microinteractions for opening/closing animations
-  - Use both direct component instantiation and service-based approaches as appropriate
+  - Use service-based approach with DialogService for programmatic dialog creation
   - Provide consistent API through DialogRef for communication with the dialog content
+  - Support custom content components through dynamic component creation
+  - Configurable dialog size, title, and buttons
+  - Accessibility features including proper ARIA attributes and keyboard navigation
 
 ### Testing Patterns
 
@@ -455,8 +458,6 @@ if (featureFlagsService.isEnabled("new-feature")) {
   - Consolidate similar functionality into single, configurable components
   - Place feature-specific components in feature/infra/components
   - Place truly shared components in shared/components
-  - Eliminate empty directories and consolidate related functionality
-  - Avoid model duplication by using a single source of truth for domain models
 
 - **Barrel Files**:
 

@@ -1,1 +1,31 @@
-import { Injectable } from '@angular/core';\nimport { Subject } from 'rxjs';\n\n/**\n * A reference to a dialog. Used to control the dialog from the component that opened it.\n */\n@Injectable()\nexport class DialogRef {\n  private readonly _afterClosed = new Subject<any>();\n  private _result: any;\n\n  /** Gets an observable that emits when the dialog has been closed. */\n  afterClosed$ = this._afterClosed.asObservable();\n\n  /**\n   * Closes the dialog with an optional result.\n   * @param result The result to return to the dialog opener.\n   */\n  close(result?: any): void {\n    this._result = result;\n    this._afterClosed.next(result);\n    this._afterClosed.complete();\n  }\n\n  /**\n   * Gets the result returned by the dialog.\n   */\n  getResult(): any {\n    return this._result;\n  }\n}\n
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
+/**
+ * A reference to a dialog. Used to control the dialog from the component that opened it.
+ */
+@Injectable()
+export class DialogRef {
+  private readonly _afterClosed = new Subject<any>();
+  private _result: any;
+
+  /** Gets an observable that emits when the dialog has been closed. */
+  afterClosed$ = this._afterClosed.asObservable();
+
+  /**
+   * Closes the dialog with an optional result.
+   * @param result The result to return to the dialog opener.
+   */
+  close(result?: any): void {
+    this._result = result;
+    this._afterClosed.next(result);
+    this._afterClosed.complete();
+  }
+
+  /**
+   * Gets the result returned by the dialog.
+   */
+  getResult(): any {
+    return this._result;
+  }
+}

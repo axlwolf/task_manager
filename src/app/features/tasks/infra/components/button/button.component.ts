@@ -45,7 +45,113 @@ type ButtonSize = 'sm' | 'md' | 'lg';
       <ng-content></ng-content>
     </button>
   `,
-  styles: [],
+  styles: [`
+    .app-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.5);
+    }
+    
+    .app-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .app-button-primary {
+      background-color: var(--color-primary, #6366f1);
+      color: white;
+    }
+    
+    .app-button-primary:hover:not(:disabled) {
+      background-color: var(--color-primary-dark, #4f46e5);
+    }
+    
+    .app-button-secondary {
+      background-color: var(--color-secondary, #9ca3af);
+      color: white;
+    }
+    
+    .app-button-secondary:hover:not(:disabled) {
+      background-color: var(--color-secondary-dark, #6b7280);
+    }
+    
+    .app-button-danger {
+      background-color: var(--color-danger, #ef4444);
+      color: white;
+    }
+    
+    .app-button-danger:hover:not(:disabled) {
+      background-color: var(--color-danger-dark, #dc2626);
+    }
+    
+    .app-button-success {
+      background-color: var(--color-success, #10b981);
+      color: white;
+    }
+    
+    .app-button-success:hover:not(:disabled) {
+      background-color: var(--color-success-dark, #059669);
+    }
+    
+    /* Size variations */
+    .px-3 {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+    
+    .py-1 {
+      padding-top: 0.375rem;
+      padding-bottom: 0.375rem;
+    }
+    
+    .text-sm {
+      font-size: 0.875rem;
+    }
+    
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .text-base {
+      font-size: 1rem;
+    }
+    
+    .px-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    
+    .py-3 {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+    
+    .text-lg {
+      font-size: 1.125rem;
+    }
+    
+    .w-full {
+      width: 100%;
+    }
+  `],
 })
 export class ButtonComponent {
   @Input() variant: ButtonVariant = 'primary';
@@ -72,7 +178,7 @@ export class ButtonComponent {
 
   get sizeClasses(): string {
     const classes = {
-      sm: 'px-3 py-1.5 text-sm',
+      sm: 'px-3 py-1 text-sm',
       md: 'px-4 py-2 text-base',
       lg: 'px-6 py-3 text-lg',
     };

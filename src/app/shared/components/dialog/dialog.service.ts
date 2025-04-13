@@ -1,1 +1,83 @@
-import { Injectable, Type, ViewContainerRef, createComponent, inject } from '@angular/core';\nimport { DialogComponent } from './dialog.component';\nimport { DialogRef } from './dialog-ref';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class DialogService {\n  /**\n   * Opens a dialog with the specified component as content.\n   * @param component The component to render inside the dialog.\n   * @param config Configuration options for the dialog.\n   * @param viewContainerRef The view container ref to create the dialog in.\n   * @returns A reference to the dialog.\n   */\n  open<T>(component: Type<T>, config: DialogConfig = {}, viewContainerRef: ViewContainerRef): DialogRef {\n    // Create a new DialogRef for this dialog instance\n    const dialogRef = new DialogRef();\n    \n    // Create the dialog component\n    const dialogComponentRef = viewContainerRef.createComponent(DialogComponent, {\n      projectableNodes: [],\n    });\n    \n    // Set dialog properties from config\n    const dialogInstance = dialogComponentRef.instance;\n    if (config.title) dialogInstance.title = config.title;\n    if (config.size) dialogInstance.dialogClass = `dialog-${config.size}`;\n    if (config.showFooter !== undefined) dialogInstance.showFooter = config.showFooter;\n    if (config.hideDefaultButtons !== undefined) dialogInstance.hideDefaultButtons = config.hideDefaultButtons;\n    if (config.confirmText) dialogInstance.confirmText = config.confirmText;\n    if (config.cancelText) dialogInstance.cancelText = config.cancelText;\n    if (config.closeOnEscape !== undefined) dialogInstance.closeOnEscape = config.closeOnEscape;\n    if (config.closeOnBackdropClick !== undefined) dialogInstance.closeOnBackdropClick = config.closeOnBackdropClick;\n    \n    // Create the content component inside the dialog\n    const contentComponentRef = createComponent(component, {\n      environmentInjector: viewContainerRef.injector,\n      hostElement: dialogComponentRef.location.nativeElement.querySelector('.dialog-body'),\n    });\n    \n    // Provide the DialogRef to the content component\n    (contentComponentRef.instance as any).dialogRef = dialogRef;\n    \n    // Handle dialog events\n    dialogInstance.dialogClose.subscribe(() => {\n      dialogRef.close();\n      dialogComponentRef.destroy();\n    });\n    \n    dialogInstance.dialogConfirm.subscribe(() => {\n      dialogRef.close(true);\n      dialogComponentRef.destroy();\n    });\n    \n    // Subscribe to the afterClosed observable to clean up when the dialog is closed\n    dialogRef.afterClosed$.subscribe(() => {\n      dialogComponentRef.destroy();\n    });\n    \n    // Open the dialog\n    dialogInstance.open();\n    \n    return dialogRef;\n  }\n}\n\n/**\n * Configuration options for the dialog.\n */\nexport interface DialogConfig {\n  title?: string;\n  size?: 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';\n  showFooter?: boolean;\n  hideDefaultButtons?: boolean;\n  confirmText?: string;\n  cancelText?: string;\n  closeOnEscape?: boolean;\n  closeOnBackdropClick?: boolean;\n}\n
+import { Injectable, Type, ViewContainerRef, createComponent, inject, EnvironmentInjector } from '@angular/core';
+import { DialogComponent } from './dialog.component';
+import { DialogRef } from './dialog-ref';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DialogService {
+  /**
+   * Opens a dialog with the specified component as content.
+   * @param component The component to render inside the dialog.
+   * @param config Configuration options for the dialog.
+   * @param viewContainerRef The view container ref to create the dialog in.
+   * @returns A reference to the dialog.
+   */
+  open<T>(component: Type<T>, config: DialogConfig = {}, viewContainerRef: ViewContainerRef): DialogRef {
+    // Create a new DialogRef for this dialog instance
+    const dialogRef = new DialogRef();
+    
+    // Create the dialog component
+    const dialogComponentRef = viewContainerRef.createComponent(DialogComponent, {
+      projectableNodes: [],
+    });
+    
+    // Set dialog properties from config
+    const dialogInstance = dialogComponentRef.instance;
+    if (config.title) dialogInstance.title = config.title;
+    if (config.size) dialogInstance.dialogClass = `dialog-${config.size}`;
+    if (config.showFooter !== undefined) dialogInstance.showFooter = config.showFooter;
+    if (config.hideDefaultButtons !== undefined) dialogInstance.hideDefaultButtons = config.hideDefaultButtons;
+    if (config.confirmText) dialogInstance.confirmText = config.confirmText;
+    if (config.cancelText) dialogInstance.cancelText = config.cancelText;
+    if (config.closeOnEscape !== undefined) dialogInstance.closeOnEscape = config.closeOnEscape;
+    if (config.closeOnBackdropClick !== undefined) dialogInstance.closeOnBackdropClick = config.closeOnBackdropClick;
+    
+    // Obtener el EnvironmentInjector
+    const environmentInjector = inject(EnvironmentInjector);
+    
+    // Create the content component inside the dialog
+    const contentComponentRef = createComponent(component, {
+      environmentInjector: environmentInjector,
+      hostElement: dialogComponentRef.location.nativeElement.querySelector('.dialog-body'),
+    });
+    
+    // Provide the DialogRef to the content component
+    (contentComponentRef.instance as any).dialogRef = dialogRef;
+    
+    // Handle dialog events
+    dialogInstance.dialogClose.subscribe(() => {
+      dialogRef.close();
+      dialogComponentRef.destroy();
+    });
+    
+    dialogInstance.dialogConfirm.subscribe(() => {
+      dialogRef.close(true);
+      dialogComponentRef.destroy();
+    });
+    
+    // Subscribe to the afterClosed observable to clean up when the dialog is closed
+    dialogRef.afterClosed$.subscribe(() => {
+      dialogComponentRef.destroy();
+    });
+    
+    // Open the dialog
+    dialogInstance.open();
+    
+    return dialogRef;
+  }
+}
+
+/**
+ * Configuration options for the dialog.
+ */
+export interface DialogConfig {
+  title?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+  showFooter?: boolean;
+  hideDefaultButtons?: boolean;
+  confirmText?: string;
+  cancelText?: string;
+  closeOnEscape?: boolean;
+  closeOnBackdropClick?: boolean;
+}

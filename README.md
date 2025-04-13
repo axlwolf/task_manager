@@ -6,7 +6,7 @@
 [![Generic badge](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.typescriptlang.org/)
 [![Generic badge](https://img.shields.io/badge/framework-angular%2018-red.svg)](https://angular.io/)
 [![Generic badge](https://img.shields.io/badge/themes-6%20themes-purple.svg)](https://github.com/axlwolf/task_manager#themes)
-[![Generic badge](https://img.shields.io/badge/last%20updated-07--2024-blue)](https://github.com/axlwolf/task_manager)
+[![Generic badge](https://img.shields.io/badge/last%20updated-08--2024-blue)](https://github.com/axlwolf/task_manager)
 
 ![EasyTask Logo](src/assets/logo.svg)
 
@@ -19,6 +19,8 @@ EasyTask is a modern task management application built with Angular 18, designed
 - **Modern UI**: Clean and responsive interface built with Tailwind CSS
 - **Reactive State Management**: Using Angular Signals for efficient state management
 - **Theme System**: Multiple themes with CSS variables and Angular service
+- **Dialog System**: Reusable dialog component with service-based API and microinteractions
+- **Icon System**: Integrated icon library with microinteractions
 
 ## Architecture
 
@@ -82,7 +84,16 @@ project-root/
 │   │   │           └── tasks.routes.ts
 │   │   ├── shared/
 │   │   │   ├── components/
+│   │   │   │   ├── dialog/
+│   │   │   │   │   ├── dialog.component.ts
+│   │   │   │   │   ├── dialog.service.ts
+│   │   │   │   │   └── dialog-ref.ts
+│   │   │   │   └── icon/
+│   │   │   │       └── icon.component.ts
 │   │   │   ├── directives/
+│   │   │   │   └── animation.directive.ts
+│   │   │   ├── services/
+│   │   │   │   └── animation.service.ts
 │   │   │   └── pipes/
 │   │   │       └── truncate.pipe.ts
 │   │   └── core/
@@ -99,7 +110,10 @@ project-root/
 │   │                               └── tasks-list.component.spec.ts
 │   └── assets/
 ├── memory-bank/
+│   ├── activeContext.md
+│   ├── productContext.md
 │   ├── progress.md
+│   ├── projectbrief.md
 │   ├── systemPatterns.md
 │   ├── techContext.md
 │   └── testingPatterns.md
@@ -198,6 +212,63 @@ The `ThemeService` provides:
 - `getThemes()` - Method to get all available themes
 - `loadTheme()` - Method to load the theme from localStorage
 
+### Using the Dialog Service
+
+The application includes a reusable dialog system built with the native HTML dialog element. The dialog system provides:
+
+- A service-based API for opening dialogs
+- Support for custom content components
+- Configurable dialog size, title, and buttons
+- Smooth animations and microinteractions
+- Accessibility features
+
+```typescript
+import { Component, inject } from "@angular/core";
+import { DialogService } from "./shared/components/dialog/dialog.service";
+import { CustomFormComponent } from "./features/custom-form/custom-form.component";
+
+@Component({
+  selector: "app-my-component",
+  template: ` <button (click)="openDialog()">Open Dialog</button> `,
+})
+export class MyComponent {
+  private readonly dialogService = inject(DialogService);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+
+  openDialog(): void {
+    const dialogRef = this.dialogService.open(
+      CustomFormComponent,
+      {
+        title: "Custom Form",
+        size: "md",
+        confirmText: "Save",
+        cancelText: "Cancel",
+      },
+      this.viewContainerRef
+    );
+
+    dialogRef.afterClosed$.subscribe((result) => {
+      if (result) {
+        console.log("Dialog confirmed");
+      } else {
+        console.log("Dialog cancelled");
+      }
+    });
+  }
+}
+```
+
+The dialog component can be customized with various options:
+
+- `title`: Dialog title
+- `size`: Dialog size (sm, md, lg, xl, fullscreen)
+- `showFooter`: Whether to show the footer with buttons
+- `hideDefaultButtons`: Whether to hide the default confirm/cancel buttons
+- `confirmText`: Text for the confirm button
+- `cancelText`: Text for the cancel button
+- `closeOnEscape`: Whether to close the dialog when the escape key is pressed
+- `closeOnBackdropClick`: Whether to close the dialog when clicking outside
+
 ## Development
 
 ### Development server
@@ -276,25 +347,21 @@ describe("UpdateTaskUseCase", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UpdateTaskUseCase,
-        provideTestingServices(),
-        { provide: TaskRepository, useValue: jasmine.createSpyObj('TaskRepository', ['updateTask']) }
-      ]
+      providers: [UpdateTaskUseCase, provideTestingServices(), { provide: TaskRepository, useValue: jasmine.createSpyObj("TaskRepository", ["updateTask"]) }],
     });
 
     usecase = TestBed.inject(UpdateTaskUseCase);
     repository = TestBed.inject(TaskRepository) as jasmine.SpyObj<TaskRepository>;
     const notifier = TestBed.inject(NotifierService);
-    notifierSpy = spyOn(notifier, 'success');
+    notifierSpy = spyOn(notifier, "success");
   });
 
   it("should update task successfully", fakeAsync(() => {
-    const task = { id: '1', title: 'Task 1' };
+    const task = { id: "1", title: "Task 1" };
     repository.updateTask.and.returnValue(of(task));
 
     let result: any;
-    usecase.execute(task).subscribe(res => result = res);
+    usecase.execute(task).subscribe((res) => (result = res));
 
     tick();
 
@@ -314,11 +381,7 @@ describe("TaskRepository", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        TaskRepository,
-        provideHttpClient(),
-        provideHttpClientTesting()
-      ]
+      providers: [TaskRepository, provideHttpClient(), provideHttpClientTesting()],
     });
 
     repository = TestBed.inject(TaskRepository);
@@ -333,7 +396,7 @@ describe("TaskRepository", () => {
     const userId = "123";
     const expectedTasks = [{ id: "1", title: "Task 1" }];
 
-    repository.getTasks(userId).subscribe(tasks => {
+    repository.getTasks(userId).subscribe((tasks) => {
       expect(tasks).toEqual(expectedTasks);
     });
 

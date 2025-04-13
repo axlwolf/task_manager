@@ -1,3 +1,23 @@
+/* Additional variables for components */
+:root {
+  /* Icon colors */
+  --primary-color: var(--color-primary-600);
+  --secondary-color: var(--color-neutral-500);
+  --success-color: var(--color-success);
+  --warning-color: var(--color-warning);
+  --danger-color: var(--color-error);
+  --info-color: var(--color-info);
+  --light-color: var(--color-neutral-100);
+  --dark-color: var(--color-neutral-800);
+  
+  /* RGB equivalents for opacity operations */
+  --primary-rgb: 124, 58, 237; /* Equivalent to color-primary-600 */
+  --success-rgb: 16, 185, 129; /* Equivalent to color-success */
+  --warning-rgb: 245, 158, 11; /* Equivalent to color-warning */
+  --danger-rgb: 239, 68, 68; /* Equivalent to color-error */
+  --info-rgb: 59, 130, 246; /* Equivalent to color-info */
+}
+
 /* You can add global styles to this file, and also import other style files */
 @import "./styles/themes.scss";
 @import "./styles/animations.scss";

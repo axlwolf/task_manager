@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -5,9 +6,10 @@ import {
   EventEmitter,
   ElementRef,
   inject,
+  OnChanges,
+  SimpleChanges,
+  AfterViewInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IconsModule } from '../../modules/icons.module';
 import { AnimationService } from '../../services/animation.service';
 import { PulseDirective } from '../../directives/pulse.directive';
 import { BounceDirective } from '../../directives/bounce.directive';
@@ -15,7 +17,7 @@ import { BounceDirective } from '../../directives/bounce.directive';
 @Component({
   selector: 'app-icon',
   standalone: true,
-  imports: [CommonModule, IconsModule, PulseDirective, BounceDirective],
+  imports: [CommonModule, PulseDirective, BounceDirective],
   template: `
     <div
       class="icon-container"
@@ -28,134 +30,55 @@ import { BounceDirective } from '../../directives/bounce.directive';
       (mouseenter)="handleMouseEnter()"
       (mouseleave)="handleMouseLeave()"
     >
-      <ng-container [ngSwitch]="name">
-        <!-- Task related icons -->
-        <i-feather
-          *ngSwitchCase="'check-circle'"
-          name="check-circle"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather
-          *ngSwitchCase="'plus-circle'"
-          name="plus-circle"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'edit'" name="edit" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'trash'" name="trash-2" [class]="iconClass">
-        </i-feather>
-
-        <!-- User related icons -->
-        <i-feather *ngSwitchCase="'user'" name="user" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'users'" name="users" [class]="iconClass">
-        </i-feather>
-
-        <!-- UI related icons -->
-        <i-feather *ngSwitchCase="'search'" name="search" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'filter'" name="filter" [class]="iconClass">
-        </i-feather>
-
-        <i-feather
-          *ngSwitchCase="'settings'"
-          name="settings"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'menu'" name="menu" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'x'" name="x" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'check'" name="check" [class]="iconClass">
-        </i-feather>
-
-        <!-- Navigation icons -->
-        <i-feather
-          *ngSwitchCase="'chevron-down'"
-          name="chevron-down"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather
-          *ngSwitchCase="'chevron-up'"
-          name="chevron-up"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather
-          *ngSwitchCase="'chevron-left'"
-          name="chevron-left"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather
-          *ngSwitchCase="'chevron-right'"
-          name="chevron-right"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <!-- Theme icons -->
-        <i-feather *ngSwitchCase="'sun'" name="sun" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'moon'" name="moon" [class]="iconClass">
-        </i-feather>
-
-        <!-- Date and time icons -->
-        <i-feather
-          *ngSwitchCase="'calendar'"
-          name="calendar"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'clock'" name="clock" [class]="iconClass">
-        </i-feather>
-
-        <!-- Notification icons -->
-        <i-feather
-          *ngSwitchCase="'alert-circle'"
-          name="alert-circle"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'info'" name="info" [class]="iconClass">
-        </i-feather>
-
-        <i-feather
-          *ngSwitchCase="'alert-triangle'"
-          name="alert-triangle"
-          [class]="iconClass"
-        >
-        </i-feather>
-
-        <!-- View icons -->
-        <i-feather *ngSwitchCase="'list'" name="list" [class]="iconClass">
-        </i-feather>
-
-        <i-feather *ngSwitchCase="'grid'" name="grid" [class]="iconClass">
-        </i-feather>
-
-        <!-- Default icon -->
-        <i-feather *ngSwitchDefault name="help-circle" [class]="iconClass">
-        </i-feather>
-      </ng-container>
+      <!-- Usamos SVG simple en lugar de feather-icons -->
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        [attr.width]="size" 
+        [attr.height]="size" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        [attr.stroke-width]="strokeWidth" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+      >
+        <ng-container [ngSwitch]="name">
+          <!-- plus-circle -->
+          <ng-container *ngSwitchCase="'plus-circle'">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </ng-container>
+          
+          <!-- check-circle -->
+          <ng-container *ngSwitchCase="'check-circle'">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9 12l2 2 4-4"></path>
+          </ng-container>
+          
+          <!-- calendar -->
+          <ng-container *ngSwitchCase="'calendar'">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </ng-container>
+          
+          <!-- alert-circle -->
+          <ng-container *ngSwitchCase="'alert-circle'">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </ng-container>
+          
+          <!-- Fallback para iconos no definidos -->
+          <ng-container *ngSwitchDefault>
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </ng-container>
+        </ng-container>
+      </svg>
     </div>
   `,
   styles: [
@@ -177,52 +100,40 @@ import { BounceDirective } from '../../directives/bounce.directive';
       }
 
       .primary {
-        color: var(--primary-color);
+        color: var(--primary-color, #6366f1);
       }
 
       .secondary {
-        color: var(--secondary-color);
+        color: var(--secondary-color, #9ca3af);
       }
 
       .success {
-        color: var(--success-color);
+        color: var(--success-color, #10b981);
       }
 
       .warning {
-        color: var(--warning-color);
+        color: var(--warning-color, #f59e0b);
       }
 
       .danger {
-        color: var(--danger-color);
+        color: var(--danger-color, #ef4444);
       }
 
       .info {
-        color: var(--info-color);
+        color: var(--info-color, #3b82f6);
       }
 
       .light {
-        color: var(--light-color);
+        color: var(--light-color, #f3f4f6);
       }
 
       .dark {
-        color: var(--dark-color);
-      }
-
-      .stroke-1 ::ng-deep svg {
-        stroke-width: 1;
-      }
-
-      .stroke-2 ::ng-deep svg {
-        stroke-width: 2;
-      }
-
-      .stroke-3 ::ng-deep svg {
-        stroke-width: 3;
+        color: var(--dark-color, #1f2937);
       }
     `,
   ],
 })
-export class IconComponent {
+export class IconComponent implements OnChanges, AfterViewInit {
   @Input() name: string = '';
   @Input() size: number = 24;
   @Input() theme:
@@ -247,12 +158,39 @@ export class IconComponent {
   private readonly animationService = inject(AnimationService);
   private readonly elementRef = inject(ElementRef);
 
-  get themeClass(): string {
-    return this.theme;
+  ngAfterViewInit(): void {
+    console.log('Icon component initialized with name:', this.name);
+    
+    // Verificar si el icono se está renderizando correctamente
+    const iconContainer = this.elementRef.nativeElement.querySelector('.icon-container');
+    if (iconContainer) {
+      console.log('Icon container found:', iconContainer);
+      
+      // Si estamos usando 'plus-circle', verificar si se encuentra el elemento svg
+      if (this.name === 'plus-circle') {
+        const svgIcon = this.elementRef.nativeElement.querySelector('svg');
+        if (svgIcon) {
+          console.log('Plus-circle icon found:', svgIcon);
+        } else {
+          console.warn('Plus-circle icon SVG not found');
+        }
+      }
+    }
   }
 
-  get iconClass(): string {
-    return `stroke-${this.strokeWidth}`;
+  ngOnChanges(changes: SimpleChanges): void {
+    // Si algún input relevante cambia, podemos reaccionar aquí
+    if (changes['name'] && !changes['name'].firstChange) {
+      console.log('Icon name changed to:', this.name);
+    }
+
+    if (changes['size'] && !changes['size'].firstChange) {
+      console.log('Icon size changed to:', this.size);
+    }
+  }
+
+  get themeClass(): string {
+    return this.theme;
   }
 
   handleClick(): void {
@@ -279,6 +217,11 @@ export class IconComponent {
     const element =
       this.elementRef.nativeElement.querySelector('.icon-container');
 
+    if (!element) {
+      console.warn('Icon container not found for animation');
+      return;
+    }
+
     switch (this.effect) {
       case 'pulse':
         const pulseAnimation = this.animationService.createPulseAnimation(
@@ -294,7 +237,7 @@ export class IconComponent {
         );
         this.animationService.playAnimation(element, bounceAnimation);
         break;
-      // Removed rotate case as it's no longer needed
+      // Podríamos añadir más casos de efectos aquí si es necesario
     }
   }
 }

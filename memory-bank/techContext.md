@@ -27,6 +27,11 @@
   - Support for microinteractions
   - Multiple weights (regular, bold, fill, etc.)
   - Angular-specific package (@phosphor-icons/angular)
+- **Dialog System**: Native HTML dialog element with Angular service
+  - Accessible modal dialogs
+  - Service-based API for programmatic dialog creation
+  - Support for custom content components
+  - Smooth animations and microinteractions
 - **CSS Variables**: For theming support
   - Multiple theme options:
     - Purple (Default)
@@ -112,10 +117,17 @@ src/
 │   │           ├── services/    # Implementation services
 │   │           └── repositories/ # Repository implementations
 │   ├── shared/             # Truly shared components
-│   │   ├── components/     # Shared UI components (header, logo, theme-switcher, dialog)
+│   │   ├── components/     # Shared UI components
+│   │   │   ├── dialog/      # Dialog system components
+│   │   │   │   ├── dialog.component.ts
+│   │   │   │   ├── dialog.service.ts
+│   │   │   │   └── dialog-ref.ts
+│   │   │   ├── header/      # Application header
+│   │   │   ├── icon/        # Icon component
+│   │   │   └── theme-switcher/ # Theme selection component
 │   │   ├── directives/     # Animation directives
-│   │   ├── modules/        # Shared modules (icons, animations)
-│   │   └── services/       # Shared services (animation, theme)
+│   │   ├── services/       # Shared services (animation, theme)
+│   │   └── pipes/          # Shared pipes (truncate)
 │   └── layouts/            # Layout components
 ├── assets/                 # Static assets
 ├── tests/                  # Test files

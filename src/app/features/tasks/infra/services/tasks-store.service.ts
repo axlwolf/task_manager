@@ -135,7 +135,7 @@ export class TasksStoreService {
   }
 
   /**
-   * Show the add task dialog
+   * Show the add task dialog using the DialogService
    */
   showAddTaskForm(): void {
     if (!this.viewContainerRef) {
@@ -145,23 +145,30 @@ export class TasksStoreService {
       return;
     }
 
-    // Create the task form component directly
-    const componentRef = this.viewContainerRef.createComponent(
-      TaskDialogFormComponent
+    // Usar el DialogService para abrir el diálogo
+    console.log('Opening dialog using DialogService...');
+    const dialogRef = this.dialogService.open(
+      TaskDialogFormComponent,
+      {
+        title: 'Add Task',
+        size: 'md',
+        showFooter: true,
+        confirmText: 'Create',
+        cancelText: 'Cancel',
+        closeOnEscape: true,
+        closeOnBackdropClick: false,
+      },
+      this.viewContainerRef
     );
-    const taskFormInstance = componentRef.instance;
 
-    // Subscribe to dialog events
-    taskFormInstance.taskCreated.subscribe((task: any) => {
-      // The task is already created in the component, no need to do anything here
-      componentRef.destroy();
+    // Suscribirse al evento de cierre del diálogo
+    dialogRef.afterClosed$.subscribe((result: CreateTaskDto | boolean | undefined) => {
+      // Si se cerró con un resultado, significa que se creó una tarea
+      if (result && result !== true) {
+        // No necesitamos hacer nada aquí ya que el componente
+        // TaskDialogFormComponent ya llama a this.tasksStore.createTask()
+        console.log('Task created:', result);
+      }
     });
-
-    taskFormInstance.dialogClosed.subscribe(() => {
-      componentRef.destroy();
-    });
-
-    // Open the dialog
-    taskFormInstance.open();
   }
 }
