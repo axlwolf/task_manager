@@ -8,8 +8,58 @@ Our testing approach focuses on:
 2. **Readability**: Tests should clearly communicate what they're testing
 3. **Reliability**: Tests should be deterministic and avoid flakiness
 4. **Coverage**: Tests should cover critical functionality and edge cases
+5. **Isolation**: Tests should be isolated from each other and from external dependencies
+6. **Consistency**: Tests should follow consistent patterns and conventions
+
+## Testing Strategy
+
+We follow a comprehensive testing strategy that includes:
+
+1. **Unit Tests**: Testing individual components, services, usecases, and repositories in isolation
+2. **Integration Tests**: Testing interactions between multiple components and services
+3. **End-to-End Tests**: Testing complete user flows from start to finish
+
+### Implementation Priority
+
+1. **First Phase**: Unit tests for all usecases, services, and critical components
+2. **Second Phase**: Integration tests for key user flows
+3. **Third Phase**: End-to-End tests for critical user journeys
+
+### Test File Organization
+
+- Test files should be co-located with the files they test
+- Use the `.spec.ts` suffix for test files
+- For components in the `src` directory, place tests in the same directory
+- For components in the root-level `tests` directory, mirror the src structure
 
 ## Component Testing
+
+### Overview
+
+Components represent the UI layer of the application and should be tested for correct rendering and interaction. Our testing approach for components focuses on:
+
+1. **Rendering**: Testing that the component renders correctly with different inputs
+2. **User Interaction**: Testing that the component responds correctly to user interactions
+3. **State Changes**: Testing that the component updates correctly when state changes
+4. **Event Emission**: Testing that the component emits expected events
+5. **Integration with Services**: Testing that the component correctly interacts with services
+
+### Implementation Plan
+
+1. **Priority Components**:
+
+   - `TasksListComponent`: Displays a list of tasks
+   - `TaskCardComponent`: Displays a single task
+   - `UserListComponent`: Displays a list of users
+   - `TaskDialogFormComponent`: Form for creating/editing tasks
+   - `DialogComponent`: Base dialog component
+
+2. **Test Scenarios for Each Component**:
+   - Initial rendering
+   - Rendering with different inputs
+   - User interactions (clicks, inputs, etc.)
+   - State changes
+   - Event emissions
 
 ### Setup Function Pattern
 
@@ -112,7 +162,34 @@ describe("ComponentUnderTest", () => {
 
 ## Service Testing
 
-Para los servicios, utilizamos un enfoque similar al de los componentes, con una función de setup que configura las dependencias y devuelve el servicio y sus mocks:
+### Overview
+
+Services manage state, coordinate between components, and provide shared functionality. Our testing approach for services focuses on:
+
+1. **State Management**: Testing that the service correctly manages and updates state
+2. **Method Behavior**: Testing that service methods behave as expected
+3. **Event Handling**: Testing that the service correctly responds to events
+4. **Dependency Interaction**: Testing that the service correctly interacts with its dependencies
+
+### Implementation Plan
+
+1. **Priority Services**:
+
+   - `TasksStoreService`: Manages task state and coordinates task operations
+   - `ThemeService`: Manages theme selection and persistence
+   - `DialogService`: Manages dialog creation and lifecycle
+   - `AnimationService`: Provides animation capabilities
+
+2. **Test Scenarios for Each Service**:
+   - State initialization
+   - State updates
+   - Method behavior
+   - Event handling
+   - Error handling
+
+### Testing Pattern
+
+For services, we use an approach similar to components, with a setup function that configures dependencies and returns the service and its mocks:
 
 ```typescript
 const setup = (args?: {
@@ -269,7 +346,34 @@ describe("ServiceUnderTest", () => {
 
 ## Use Case Testing
 
-Para los casos de uso, utilizamos un enfoque basado en TestBed que nos permite probar la lógica de negocio de manera aislada:
+### Overview
+
+Usecases represent the application's business logic and should be thoroughly tested. Our testing approach for usecases focuses on:
+
+1. **Input Validation**: Testing that the usecase properly validates its inputs
+2. **Business Logic**: Testing that the usecase correctly implements business rules
+3. **Error Handling**: Testing that the usecase properly handles errors
+4. **Integration with Repositories**: Testing that the usecase correctly interacts with repositories
+5. **Side Effects**: Testing that the usecase triggers expected side effects (notifications, loaders, etc.)
+
+### Implementation Plan
+
+1. **Priority Usecases**:
+
+   - `GetTasksUseCase`: Retrieves tasks for a user
+   - `CreateTaskUseCase`: Creates a new task
+   - `CompleteTaskUseCase`: Marks a task as complete
+   - `GetUsersUseCase`: Retrieves available users
+
+2. **Test Scenarios for Each Usecase**:
+   - Happy path (successful execution)
+   - Input validation errors
+   - Repository errors
+   - Edge cases (empty results, etc.)
+
+### Testing Pattern
+
+For usecases, we use a TestBed-based approach that allows us to test business logic in isolation:
 
 ```typescript
 describe("UpdateTaskUseCase", () => {
@@ -429,7 +533,30 @@ describe("UpdateTaskUseCase", () => {
 
 ## Repository Testing
 
-Para los repositorios, utilizamos un enfoque basado en HttpTestingController que nos permite probar las interacciones con el backend:
+### Overview
+
+Repositories abstract data access and should be tested for correct interaction with external data sources. Our testing approach for repositories focuses on:
+
+1. **API Interaction**: Testing that the repository correctly interacts with APIs
+2. **Data Transformation**: Testing that the repository correctly transforms data
+3. **Error Handling**: Testing that the repository properly handles API errors
+
+### Implementation Plan
+
+1. **Priority Repositories**:
+
+   - `TaskImplRepository`: Implements TaskRepository for task data access
+   - `UserImplRepository`: Implements UserRepository for user data access
+
+2. **Test Scenarios for Each Repository**:
+   - Successful data retrieval
+   - Successful data creation/update
+   - API errors
+   - Data transformation
+
+### Testing Pattern
+
+For repositories, we use HttpTestingController to simulate HTTP interactions:
 
 ```typescript
 describe("TaskRepositoryImpl", () => {
@@ -768,6 +895,60 @@ describe("Task Management", () => {
    - Establecer estrategias para manejar pruebas flaky (inestables)
    - Considerar pruebas de accesibilidad y rendimiento
 
+## Implementation Roadmap
+
+### Phase 1: Unit Tests (Immediate Priority)
+
+1. **Week 1: Usecase Tests**
+
+   - Implement tests for GetTasksUseCase
+   - Implement tests for CreateTaskUseCase
+   - Implement tests for CompleteTaskUseCase
+   - Implement tests for GetUsersUseCase
+
+2. **Week 2: Service Tests**
+
+   - Implement tests for TasksStoreService
+   - Implement tests for ThemeService
+   - Implement tests for DialogService
+   - Implement tests for AnimationService
+
+3. **Week 3: Repository Tests**
+
+   - Implement tests for TaskImplRepository
+   - Implement tests for UserImplRepository
+
+4. **Week 4: Component Tests**
+   - Implement tests for TasksListComponent
+   - Implement tests for TaskCardComponent
+   - Implement tests for UserListComponent
+   - Implement tests for TaskDialogFormComponent
+   - Implement tests for DialogComponent
+
+### Phase 2: Integration Tests
+
+1. **Week 5: Setup Integration Testing Infrastructure**
+
+   - Configure TestBed for integration testing
+   - Create helper functions for integration testing
+
+2. **Week 6-7: Implement Integration Tests**
+   - Task creation flow
+   - Task completion flow
+   - User selection flow
+
+### Phase 3: End-to-End Tests
+
+1. **Week 8: Setup Cypress**
+
+   - Install and configure Cypress
+   - Create helper functions and commands
+
+2. **Week 9-10: Implement E2E Tests**
+   - Task management flow
+   - User selection flow
+   - Theme switching flow
+
 ## Test Organization
 
 ### File Structure
@@ -793,3 +974,5 @@ describe("Task Management", () => {
 6. **Clean Up After Tests**: Reset state between tests to avoid interference
 7. **Test Edge Cases**: Include tests for boundary conditions and error scenarios
 8. **Maintain Tests**: Update tests when the code changes
+9. **Follow AAA Pattern**: Arrange, Act, Assert
+10. **Use Test Doubles Appropriately**: Know when to use spies, stubs, mocks, or fakes
