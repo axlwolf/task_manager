@@ -19,13 +19,8 @@
 - ✅ Task card component
 - ✅ Task form component
 - ✅ Add task button component
-- ✅ Icon system with Phosphor Icons and microinteractions
-- ✅ Dialog system with service-based API and microinteractions
-  - ✅ Native HTML dialog element for accessibility
-  - ✅ DialogService for programmatic dialog creation
-  - ✅ DialogRef for communication with dialog content
-  - ✅ Support for custom content components
-  - ✅ Configurable dialog size, title, and buttons
+- ✅ Icon system with Feather Icons and microinteractions
+- ⬛ Dialog modal component for adding tasks (in progress)
 
 ### State Management
 
@@ -91,6 +86,8 @@
 - ✅ Testing documentation and best practices
 - ✅ Integration testing strategy documentation
 - ✅ E2E testing strategy documentation
+- ✅ Comprehensive unit testing strategy with implementation plan
+- ✅ Detailed testing roadmap with prioritized components, services, and usecases
 - ⬜ Implementation of repository tests
 - ⬜ Implementation of use case tests
 - ⬜ Implementation of service tests
@@ -122,21 +119,13 @@ The application is in active development with the core functionality implemented
 
 The UI is responsive and styled with Tailwind CSS, providing a clean and modern user experience. State management is implemented using Angular Signals, providing reactive updates to the UI when data changes.
 
-Recent improvements include:
-
-- Implementation of a complete dialog system with service-based API
-- Integration of Phosphor Icons with microinteractions
-- Enhanced theme system with improved contrast and harmonious colors
-- Standardized component styling with CSS variables and theme classes
-- Improved project structure with proper organization of shared components
-
 ## Known Issues
 
 ### Technical Debt
 
 1. **Error Handling**: Need to implement comprehensive error handling throughout the application
 2. **Form Validation**: Basic validation is in place, but needs enhancement
-3. **Testing Coverage**: Testing approach and strategies established, implementation needed for all levels (unit, integration, E2E)
+3. **Testing Coverage**: Comprehensive testing strategy established with detailed implementation plan, now need to execute the plan starting with unit tests for high-priority components
 4. **Accessibility**: Need to ensure all components are fully accessible
 
 ### Bugs
@@ -153,14 +142,13 @@ Recent improvements include:
 
 ## Next Milestone Goals
 
-1. Enhance task form component to use the dialog service
-2. Implement task editing functionality using the dialog system
-3. Implement task deletion functionality
-4. Complete task filtering and sorting functionality
-5. Implement comprehensive error handling
-6. Add loading indicators and improve UX
-7. Expand test coverage using the established testing patterns
-8. Implement unit tests for services, use cases, and repositories
-9. Set up integration testing infrastructure and implement tests for key flows
-10. Set up Cypress for E2E testing and implement tests for critical user journeys
-11. Document the architecture and component usage
+1. Implement dialog modal component for adding tasks with microinteractions
+2. Complete icon system implementation with Feather Icons
+3. Complete task filtering and sorting functionality
+4. Implement comprehensive error handling
+5. Add loading indicators and improve UX
+6. Begin implementing unit tests following the established testing strategy
+7. Start with high-priority usecases (GetTasksUseCase, CreateTaskUseCase)
+8. Continue with key services (TasksStoreService, DialogService)
+9. Implement tests for critical repositories (TaskImplRepository, UserImplRepository)
+10. Document the architecture and component usage
