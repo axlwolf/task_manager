@@ -6,51 +6,71 @@ import { Task } from '../../../../../../../../src/app/features/tasks/domain/mode
 import { CreateTaskDto } from '../../../../../../../../src/app/features/tasks/application/dtos/task.dto';
 
 describe('CreateTaskUseCase', () => {
-  let usecase: CreateTaskUseCase;
-  let taskRepository: jasmine.SpyObj<TaskRepository>;
-
   const mockTask: Task = {
     id: '1',
     title: 'New Task',
     description: 'New Description',
     dueDate: new Date('2023-12-31'),
     userId: 'user1',
-    completed: false
+    completed: false,
   };
 
   const mockCreateTaskDto: CreateTaskDto = {
     title: 'New Task',
     description: 'New Description',
     dueDate: '2023-12-31',
-    userId: 'user1'
+    userId: 'user1',
   };
 
-  beforeEach(() => {
+  const setup = (config?: {
+    mockTaskRepository?: {
+      createTask?: jasmine.Spy;
+    };
+  }) => {
     // Create a spy for the TaskRepository
-    const taskRepositorySpy = jasmine.createSpyObj('TaskRepository', ['createTask']);
+    const taskRepositorySpy = jasmine.createSpyObj('TaskRepository', [
+      'createTask',
+    ]);
+
+    // Configure the spy if provided in config
+    if (config?.mockTaskRepository?.createTask) {
+      taskRepositorySpy.createTask = config.mockTaskRepository.createTask;
+    }
 
     TestBed.configureTestingModule({
       providers: [
         CreateTaskUseCase,
-        { provide: TaskRepository, useValue: taskRepositorySpy }
-      ]
+        { provide: TaskRepository, useValue: taskRepositorySpy },
+      ],
     });
 
     // Inject both the service-to-test and its (spy) dependency
-    usecase = TestBed.inject(CreateTaskUseCase);
-    taskRepository = TestBed.inject(TaskRepository) as jasmine.SpyObj<TaskRepository>;
-  });
+    const usecase = TestBed.inject(CreateTaskUseCase);
+    const taskRepository = TestBed.inject(
+      TaskRepository
+    ) as jasmine.SpyObj<TaskRepository>;
+
+    return { usecase, taskRepository };
+  };
 
   it('should be created', () => {
+    const { usecase } = setup();
     expect(usecase).toBeTruthy();
   });
 
   it('should create a task with the provided data', (done) => {
     // Arrange
-    taskRepository.createTask.and.returnValue(of(mockTask));
+    const createTaskSpy = jasmine
+      .createSpy('createTask')
+      .and.returnValue(of(mockTask));
+    const { usecase, taskRepository } = setup({
+      mockTaskRepository: {
+        createTask: createTaskSpy,
+      },
+    });
 
     // Act
-    usecase.execute(mockCreateTaskDto).subscribe(task => {
+    usecase.execute(mockCreateTaskDto).subscribe((task) => {
       // Assert
       expect(task).toEqual(mockTask);
       expect(taskRepository.createTask).toHaveBeenCalledWith({
@@ -58,7 +78,7 @@ describe('CreateTaskUseCase', () => {
         description: mockCreateTaskDto.description,
         dueDate: new Date(mockCreateTaskDto.dueDate),
         userId: mockCreateTaskDto.userId,
-        completed: false
+        completed: false,
       });
       done();
     });
@@ -66,10 +86,17 @@ describe('CreateTaskUseCase', () => {
 
   it('should convert string date to Date object', (done) => {
     // Arrange
-    taskRepository.createTask.and.returnValue(of(mockTask));
+    const createTaskSpy = jasmine
+      .createSpy('createTask')
+      .and.returnValue(of(mockTask));
+    const { usecase, taskRepository } = setup({
+      mockTaskRepository: {
+        createTask: createTaskSpy,
+      },
+    });
     const dtoWithStringDate: CreateTaskDto = {
       ...mockCreateTaskDto,
-      dueDate: '2023-12-31'
+      dueDate: '2023-12-31',
     };
 
     // Act
@@ -78,10 +105,10 @@ describe('CreateTaskUseCase', () => {
       const expectedDate = new Date('2023-12-31');
       expect(taskRepository.createTask).toHaveBeenCalledWith(
         jasmine.objectContaining({
-          dueDate: jasmine.any(Date)
+          dueDate: jasmine.any(Date),
         })
       );
-      
+
       // Get the actual argument passed to createTask
       const actualArg = taskRepository.createTask.calls.mostRecent().args[0];
       expect(actualArg.dueDate.getTime()).toEqual(expectedDate.getTime());
@@ -91,11 +118,18 @@ describe('CreateTaskUseCase', () => {
 
   it('should handle Date object in DTO', (done) => {
     // Arrange
-    taskRepository.createTask.and.returnValue(of(mockTask));
+    const createTaskSpy = jasmine
+      .createSpy('createTask')
+      .and.returnValue(of(mockTask));
+    const { usecase, taskRepository } = setup({
+      mockTaskRepository: {
+        createTask: createTaskSpy,
+      },
+    });
     const dateObject = new Date('2023-12-31');
     const dtoWithDateObject: CreateTaskDto = {
       ...mockCreateTaskDto,
-      dueDate: dateObject
+      dueDate: dateObject,
     };
 
     // Act
@@ -103,10 +137,10 @@ describe('CreateTaskUseCase', () => {
       // Assert
       expect(taskRepository.createTask).toHaveBeenCalledWith(
         jasmine.objectContaining({
-          dueDate: jasmine.any(Date)
+          dueDate: jasmine.any(Date),
         })
       );
-      
+
       // Get the actual argument passed to createTask
       const actualArg = taskRepository.createTask.calls.mostRecent().args[0];
       expect(actualArg.dueDate).toEqual(dateObject);
@@ -117,7 +151,14 @@ describe('CreateTaskUseCase', () => {
   it('should propagate errors from the repository', (done) => {
     // Arrange
     const error = new Error('Repository error');
-    taskRepository.createTask.and.returnValue(throwError(() => error));
+    const createTaskSpy = jasmine
+      .createSpy('createTask')
+      .and.returnValue(throwError(() => error));
+    const { usecase, taskRepository } = setup({
+      mockTaskRepository: {
+        createTask: createTaskSpy,
+      },
+    });
 
     // Act
     usecase.execute(mockCreateTaskDto).subscribe({
@@ -129,7 +170,7 @@ describe('CreateTaskUseCase', () => {
         expect(err).toBe(error);
         expect(taskRepository.createTask).toHaveBeenCalled();
         done();
-      }
+      },
     });
   });
 });

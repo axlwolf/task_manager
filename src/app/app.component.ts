@@ -14,7 +14,6 @@ export class AppComponent {
   private readonly themeService = inject(ThemeService);
 
   constructor() {
-    // Theme is automatically loaded in the ThemeService constructor
-    // This ensures the theme is applied as soon as the app starts
+    this.themeService.loadTheme();
   }
 }

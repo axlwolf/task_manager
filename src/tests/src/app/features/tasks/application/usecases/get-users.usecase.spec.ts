@@ -5,48 +5,68 @@ import { UserRepository } from '../../../../../../../../src/app/features/tasks/d
 import { User } from '../../../../../../../../src/app/features/tasks/domain/models/user.model';
 
 describe('GetUsersUseCase', () => {
-  let usecase: GetUsersUseCase;
-  let userRepository: jasmine.SpyObj<UserRepository>;
-
   const mockUsers: User[] = [
     {
       id: 'user1',
       name: 'User 1',
-      avatar: 'avatar1.png'
+      avatar: 'avatar1.png',
     },
     {
       id: 'user2',
       name: 'User 2',
-      avatar: 'avatar2.png'
-    }
+      avatar: 'avatar2.png',
+    },
   ];
 
-  beforeEach(() => {
+  const setup = (config?: {
+    mockUserRepository?: {
+      getUsers?: jasmine.Spy;
+    };
+  }) => {
     // Create a spy for the UserRepository
-    const userRepositorySpy = jasmine.createSpyObj('UserRepository', ['getUsers']);
+    const userRepositorySpy = jasmine.createSpyObj('UserRepository', [
+      'getUsers',
+    ]);
+
+    // Configure the spy if provided in config
+    if (config?.mockUserRepository?.getUsers) {
+      userRepositorySpy.getUsers = config.mockUserRepository.getUsers;
+    }
 
     TestBed.configureTestingModule({
       providers: [
         GetUsersUseCase,
-        { provide: UserRepository, useValue: userRepositorySpy }
-      ]
+        { provide: UserRepository, useValue: userRepositorySpy },
+      ],
     });
 
     // Inject both the service-to-test and its (spy) dependency
-    usecase = TestBed.inject(GetUsersUseCase);
-    userRepository = TestBed.inject(UserRepository) as jasmine.SpyObj<UserRepository>;
-  });
+    const usecase = TestBed.inject(GetUsersUseCase);
+    const userRepository = TestBed.inject(
+      UserRepository
+    ) as jasmine.SpyObj<UserRepository>;
+
+    return { usecase, userRepository };
+  };
 
   it('should be created', () => {
+    const { usecase } = setup();
     expect(usecase).toBeTruthy();
   });
 
   it('should return all users', (done) => {
     // Arrange
-    userRepository.getUsers.and.returnValue(of(mockUsers));
+    const userRepositorySpy = jasmine
+      .createSpy('getUsers')
+      .and.returnValue(of(mockUsers));
+    const { usecase, userRepository } = setup({
+      mockUserRepository: {
+        getUsers: userRepositorySpy,
+      },
+    });
 
     // Act
-    usecase.execute().subscribe(users => {
+    usecase.execute().subscribe((users) => {
       // Assert
       expect(users).toEqual(mockUsers);
       expect(userRepository.getUsers).toHaveBeenCalled();
@@ -56,10 +76,17 @@ describe('GetUsersUseCase', () => {
 
   it('should return empty array when no users are found', (done) => {
     // Arrange
-    userRepository.getUsers.and.returnValue(of([]));
+    const userRepositorySpy = jasmine
+      .createSpy('getUsers')
+      .and.returnValue(of([]));
+    const { usecase, userRepository } = setup({
+      mockUserRepository: {
+        getUsers: userRepositorySpy,
+      },
+    });
 
     // Act
-    usecase.execute().subscribe(users => {
+    usecase.execute().subscribe((users) => {
       // Assert
       expect(users).toEqual([]);
       expect(userRepository.getUsers).toHaveBeenCalled();
@@ -70,7 +97,14 @@ describe('GetUsersUseCase', () => {
   it('should propagate errors from the repository', (done) => {
     // Arrange
     const error = new Error('Repository error');
-    userRepository.getUsers.and.returnValue(throwError(() => error));
+    const userRepositorySpy = jasmine
+      .createSpy('getUsers')
+      .and.returnValue(throwError(() => error));
+    const { usecase, userRepository } = setup({
+      mockUserRepository: {
+        getUsers: userRepositorySpy,
+      },
+    });
 
     // Act
     usecase.execute().subscribe({
@@ -82,7 +116,7 @@ describe('GetUsersUseCase', () => {
         expect(err).toBe(error);
         expect(userRepository.getUsers).toHaveBeenCalled();
         done();
-      }
+      },
     });
   });
 
@@ -91,17 +125,24 @@ describe('GetUsersUseCase', () => {
     const usersWithoutAvatars: User[] = [
       {
         id: 'user1',
-        name: 'User 1'
+        name: 'User 1',
       },
       {
         id: 'user2',
-        name: 'User 2'
-      }
+        name: 'User 2',
+      },
     ];
-    userRepository.getUsers.and.returnValue(of(usersWithoutAvatars));
+    const userRepositorySpy = jasmine
+      .createSpy('getUsers')
+      .and.returnValue(of(usersWithoutAvatars));
+    const { usecase, userRepository } = setup({
+      mockUserRepository: {
+        getUsers: userRepositorySpy,
+      },
+    });
 
     // Act
-    usecase.execute().subscribe(users => {
+    usecase.execute().subscribe((users) => {
       // Assert
       expect(users).toEqual(usersWithoutAvatars);
       expect(users[0].avatar).toBeUndefined();
