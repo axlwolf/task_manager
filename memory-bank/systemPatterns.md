@@ -244,16 +244,60 @@ EasyTask follows Trunk-Based Development (TBD) principles for version control:
 
 ### Feature Flags
 
-For integrating incomplete features without affecting users:
+For integrating incomplete features without affecting users, we use a dedicated FeatureFlagService:
 
 ```typescript
-// Example of feature flag usage
-if (featureFlagsService.isEnabled("new-feature")) {
-  // New feature code
-} else {
-  // Existing code
+@Injectable({
+  providedIn: "root",
+})
+export class FeatureFlagService {
+  private flags = signal<Record<string, boolean>>({
+    // Default flags
+    "new-task-dialog": true,
+    "task-filtering": false,
+    "user-management": false,
+  });
+
+  isEnabled(flagName: string): boolean {
+    return this.flags()[flagName] ?? false;
+  }
+
+  enable(flagName: string): void {
+    this.flags.update((flags) => ({ ...flags, [flagName]: true }));
+  }
+
+  disable(flagName: string): void {
+    this.flags.update((flags) => ({ ...flags, [flagName]: false }));
+  }
 }
 ```
+
+Usage in components:
+
+```typescript
+@Component({
+  selector: "app-my-feature",
+  template: `
+    @if (featureEnabled()) {
+    <div>New Feature Content</div>
+    } @else {
+    <div>Old Feature Content</div>
+    }
+  `,
+})
+export class MyFeatureComponent {
+  private featureFlagService = inject(FeatureFlagService);
+
+  featureEnabled = computed(() => this.featureFlagService.isEnabled("my-feature-flag"));
+}
+```
+
+This approach allows us to:
+
+1. Merge incomplete features into the trunk
+2. Toggle features on/off without code changes
+3. Test both old and new implementations
+4. Gradually roll out features to users
 
 ## Coding Patterns and Standards
 
@@ -296,6 +340,49 @@ if (featureFlagsService.isEnabled("new-feature")) {
   - Accessibility features including proper ARIA attributes and keyboard navigation
 
 ### Testing Patterns
+
+- **Feature Flag Testing Pattern**:
+
+  - Test components with feature flags both enabled and disabled
+  - Mock the FeatureFlagService in tests
+  - Use a setup function that configures feature flags
+
+  ```typescript
+  const setup = (config?: { flags?: Record<string, boolean> }) => {
+    // Default configuration
+    const defaultConfig = {
+      flags: {
+        "new-task-dialog": true,
+        "task-filtering": false,
+      },
+    };
+
+    // Merge with provided config
+    const testConfig = {
+      flags: { ...defaultConfig.flags, ...config?.flags },
+    };
+
+    // Create spy for FeatureFlagService
+    const featureFlagSpy = jasmine.createSpyObj("FeatureFlagService", ["isEnabled"]);
+
+    // Configure the spy to return values based on the test config
+    featureFlagSpy.isEnabled.and.callFake((flagName: string) => testConfig.flags[flagName] ?? false);
+
+    // Configure TestBed
+    TestBed.configureTestingModule({
+      imports: [ComponentUnderTest],
+      providers: [{ provide: FeatureFlagService, useValue: featureFlagSpy }],
+    });
+
+    // Create component and fixture
+    const fixture = TestBed.createComponent(ComponentUnderTest);
+    const component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    return { fixture, component, featureFlagSpy, testConfig };
+  };
+  ```
 
 - **Setup Function Pattern**:
 
