@@ -27,8 +27,11 @@ import { TasksStoreService } from '../services/tasks-store.service';
       </div>
     </div>
 
-    <!-- Container for dialogs -->
-    <div #dialogContainer></div>
+    <!-- Container for dialogs - make sure it's visible and accessible -->
+    <div
+      #dialogContainer
+      style="position: fixed; top: 0; left: 0; z-index: 1000;"
+    ></div>
   `,
   styles: [],
 })
