@@ -1,16 +1,8 @@
-import { Provider } from '@angular/core';
-import { TaskRepository } from './features/tasks/domain/repositories/task.repository';
-import { UserRepository } from './features/tasks/domain/repositories/user.repository';
-import { TaskImplRepository } from './features/tasks/infra/repositories/task-impl.repository';
-import { UserImplRepository } from './features/tasks/infra/repositories/user-impl.repository';
+import { EnvironmentProviders, Provider } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { AnimationService } from './shared/services/animation.service';
 
-export const APP_PROVIDERS: Provider[] = [
-  {
-    provide: TaskRepository,
-    useClass: TaskImplRepository
-  },
-  {
-    provide: UserRepository,
-    useClass: UserImplRepository
-  }
+export const APP_PROVIDERS: (Provider | EnvironmentProviders)[] = [
+  provideAnimations(),
+  AnimationService
 ];

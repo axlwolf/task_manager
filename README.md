@@ -107,6 +107,13 @@ project-root/
 └── test-setup.ts
 ```
 
+## Documentation
+
+- [Components Usage Documentation](src/app/documentation/components-usage.md) - Reference for shared components like IconComponent and DialogComponent
+- [Directives Usage Documentation](src/app/documentation/directives-usage.md) - Reference for animation directives
+- [Migration Guide](src/app/documentation/migration-guide.md) - Guide for migrating to Angular 18 standalone components
+- [Code Style Guide](src/app/documentation/code-style-guide.md) - Coding standards and conventions
+
 ## Technologies Used
 
 - **Angular 18**: Latest version of the Angular framework
@@ -261,7 +268,7 @@ it("should handle validation errors", async () => {
 
 #### Use Case Testing
 
-````typescript
+```typescript
 describe("UpdateTaskUseCase", () => {
   let usecase: UpdateTaskUseCase;
   let repository: jasmine.SpyObj<TaskRepository>;
@@ -296,6 +303,7 @@ describe("UpdateTaskUseCase", () => {
     expect(notifierSpy).toHaveBeenCalled();
   }));
 });
+```
 
 #### Repository Testing
 
@@ -334,6 +342,7 @@ describe("TaskRepository", () => {
     req.flush(expectedTasks);
   });
 });
+```
 
 This pattern provides several benefits:
 
@@ -349,4 +358,3 @@ See the [Testing Patterns](memory-bank/testingPatterns.md) documentation for mor
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-````
