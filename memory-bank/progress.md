@@ -20,7 +20,7 @@
 - ✅ Task form component
 - ✅ Add task button component
 - ✅ Icon system with Feather Icons and microinteractions
-- ⬛ Dialog modal component for adding tasks (in progress)
+- ✅ Dialog modal component for adding tasks using native HTML dialog element
 
 ### State Management
 
@@ -117,6 +117,13 @@ The application is in active development with the core functionality implemented
 
 The UI is responsive and styled with Tailwind CSS, providing a clean and modern user experience. State management is implemented using Angular Signals, providing reactive updates to the UI when data changes.
 
+Recent improvements include:
+
+- Implementation of a native HTML dialog element for the task form
+- Cleanup of unused components, services, and directives
+- Removal of duplicate models and consolidation of code
+- Reorganization of project structure for better maintainability
+
 ## Known Issues
 
 ### Technical Debt
@@ -140,13 +147,14 @@ The UI is responsive and styled with Tailwind CSS, providing a clean and modern 
 
 ## Next Milestone Goals
 
-1. Implement dialog modal component for adding tasks with microinteractions
-2. Complete icon system implementation with Feather Icons
-3. Complete task filtering and sorting functionality
-4. Implement comprehensive error handling
-5. Add loading indicators and improve UX
-6. Expand test coverage using the established testing patterns
-7. Implement unit tests for services, use cases, and repositories
-8. Set up integration testing infrastructure and implement tests for key flows
-9. Set up Cypress for E2E testing and implement tests for critical user journeys
-10. Document the architecture and component usage
+1. Enhance dialog modal component with additional microinteractions
+2. Implement task editing functionality
+3. Implement task deletion functionality
+4. Complete task filtering and sorting functionality
+5. Implement comprehensive error handling
+6. Add loading indicators and improve UX
+7. Expand test coverage using the established testing patterns
+8. Implement unit tests for services, use cases, and repositories
+9. Set up integration testing infrastructure and implement tests for key flows
+10. Set up Cypress for E2E testing and implement tests for critical user journeys
+11. Document the architecture and component usage

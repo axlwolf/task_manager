@@ -289,7 +289,8 @@ if (featureFlagsService.isEnabled("new-feature")) {
   - Use HTML5 dialog element for accessibility and native behavior
   - Abstract dialog functionality into reusable components
   - Implement microinteractions for opening/closing animations
-  - Use service-based approach for showing/hiding dialogs
+  - Use both direct component instantiation and service-based approaches as appropriate
+  - Provide consistent API through DialogRef for communication with the dialog content
 
 ### Testing Patterns
 
@@ -454,6 +455,8 @@ if (featureFlagsService.isEnabled("new-feature")) {
   - Consolidate similar functionality into single, configurable components
   - Place feature-specific components in feature/infra/components
   - Place truly shared components in shared/components
+  - Eliminate empty directories and consolidate related functionality
+  - Avoid model duplication by using a single source of truth for domain models
 
 - **Barrel Files**:
 

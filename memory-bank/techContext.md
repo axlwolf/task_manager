@@ -97,18 +97,29 @@ src/
 ├── app/
 │   ├── core/               # Core services, guards, interceptors
 │   ├── features/           # Feature modules
+│   │   ├── home/           # Home feature (simple welcome page)
 │   │   └── tasks/          # Tasks feature
 │   │       ├── domain/     # Domain layer (models, interfaces)
 │   │       ├── application/ # Application layer (use cases)
 │   │       └── infra/      # Infrastructure layer
 │   │           ├── components/  # Feature-specific components
+│   │           │   ├── add-task-button/
+│   │           │   ├── task-card/
+│   │           │   ├── task-dialog-form/ # Task form as dialog
+│   │           │   ├── tasks-list/
+│   │           │   └── user-list/
 │   │           ├── pages/      # Page components
 │   │           ├── services/    # Implementation services
 │   │           └── repositories/ # Repository implementations
-│   ├── shared/             # Truly shared components (header, logo, theme-switcher)
+│   ├── shared/             # Truly shared components
+│   │   ├── components/     # Shared UI components (header, logo, theme-switcher, dialog)
+│   │   ├── directives/     # Animation directives
+│   │   ├── modules/        # Shared modules (icons, animations)
+│   │   └── services/       # Shared services (animation, theme)
 │   └── layouts/            # Layout components
 ├── assets/                 # Static assets
-└── styles/                 # Global styles
+├── tests/                  # Test files
+└── memory-bank/           # Project documentation
 ```
 
 ## Technical Constraints
@@ -479,6 +490,7 @@ Este enfoque permite probar de manera aislada las interacciones con el backend, 
   - Task components: `.task-card`, `.task-title`, `.task-description`, etc.
   - Button components: `.app-button`, `.app-button-primary`, etc.
   - Page layouts: `.tasks-header-container`, `.tasks-empty-container`, etc.
+  - Dialog components: `.task-dialog`, `.dialog-title`, `.dialog-body`, etc.
 
 - **Avoid Inline Styles**: Never use inline styles in templates
 
@@ -491,6 +503,23 @@ Este enfoque permite probar de manera aislada las interacciones con el backend, 
   ```
 
 - **Combine Tailwind with Theme Classes**: Use Tailwind for layout and theme classes for colors/styling
+
+- **Use CSS Variables for Theming**: Define and use CSS variables for colors, spacing, and other theme properties
+
+  ```css
+  :host {
+    --form-bg-color: var(--color-primary-dark);
+    --form-text-color: white;
+  }
+  ```
+
+- **Add Animation Classes**: Use consistent animation classes for microinteractions
+
+  ```css
+  .dialog-enter {
+    animation: dialogEnter var(--animation-duration-normal) var(--animation-timing-ease-out) forwards;
+  }
+  ```
 
 ### Documentation Standards
 
