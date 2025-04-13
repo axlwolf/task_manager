@@ -1,4 +1,4 @@
-import { User } from '../models/user.model';
+import { User } from '../../features/tasks/domain/models/user.model';
 import { Task } from '../models/task.model';
 
 // Using Dicebear API for avatars: https://www.dicebear.com/styles/avataaars

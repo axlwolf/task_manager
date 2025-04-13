@@ -26,5 +26,4 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class HomePageComponent {
-}
+export class HomePageComponent {}
