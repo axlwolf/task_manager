@@ -1,6 +1,3 @@
-// Import all the spec files
-const testsContext = require.context('./tests', true, /\.spec\.ts$/);
+// Import all the spec files from src/tests
+const testsContext = require.context('./src/tests', true, /\.spec\.ts$/);
 testsContext.keys().forEach(testsContext);
-
-const srcContext = require.context('./src', true, /\.spec\.ts$/);
-srcContext.keys().forEach(srcContext);

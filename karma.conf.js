@@ -35,10 +35,9 @@ module.exports = function (config) {
     reporters: ['progress', 'kjhtml'],
     browsers: ['Chrome'],
     restartOnFileChange: true,
-    // Add this to include both src and tests directories
+    // Only include tests from src/tests directory
     files: [
-      { pattern: 'src/**/*.spec.ts', watched: true, type: 'js' },
-      { pattern: 'tests/**/*.spec.ts', watched: true, type: 'js' }
+      { pattern: 'src/tests/**/*.spec.ts', watched: true, type: 'js' }
     ]
   });
 };

@@ -1,6 +1,7 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Import from the actual source paths
 import { Task } from '../../../../../../../../app/features/tasks/domain/models/task.model';
@@ -64,6 +65,12 @@ const setup = (config?: { tasks?: Task[]; user?: User | null }) => {
 };
 
 describe('TasksListComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [provideAnimations()],
+    }).compileComponents();
+  });
+
   it('should create', () => {
     const { component } = setup();
     expect(component).toBeTruthy();
