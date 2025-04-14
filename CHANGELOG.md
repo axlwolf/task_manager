@@ -1,0 +1,56 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## 1.0.0 (2024-07-15)
+
+### Features
+
+- **testing:** 38. refactor: cleanup tests according to project documentation ([a44afa1](https://github.com/axlwolf/task_manager/commit/a44afa1))
+- **testing:** 37. fix: add feature-flag service and fix tests ([45ee6ec](https://github.com/axlwolf/task_manager/commit/45ee6ec))
+- **testing:** 35. test: add unit tests for components ([6bbfdd9](https://github.com/axlwolf/task_manager/commit/6bbfdd9))
+- **testing:** 34. test: add unit tests for services ([784860d](https://github.com/axlwolf/task_manager/commit/784860d))
+- **testing:** 33. fix: remove incorrectly named files from root directory ([972b00e](https://github.com/axlwolf/task_manager/commit/972b00e))
+- **testing:** 32. fix: remove incorrectly named files from root directory ([b6bbf55](https://github.com/axlwolf/task_manager/commit/b6bbf55))
+- **testing:** 31. fix: correct usecase tests and fix feature-flags-admin component ([3fc4c75](https://github.com/axlwolf/task_manager/commit/3fc4c75))
+- **testing:** 30. test: add unit tests for all usecases ([93015a9](https://github.com/axlwolf/task_manager/commit/93015a9))
+- **architecture:** 29. fix: remove incorrectly named files from root directory ([55de812](https://github.com/axlwolf/task_manager/commit/55de812))
+- **architecture:** 28. feat: implement trunk-based development with feature flags ([bd4bf35](https://github.com/axlwolf/task_manager/commit/bd4bf35))
+- **docs:** 27. docs: implement comprehensive unit testing strategy ([5993192](https://github.com/axlwolf/task_manager/commit/5993192))
+- **ui:** 26. fix: Correct DialogService injection context error ([464a627](https://github.com/axlwolf/task_manager/commit/464a627))
+- **docs:** 25. docs: Update documentation to reflect dialog service implementation ([1aaf3dc](https://github.com/axlwolf/task_manager/commit/1aaf3dc))
+- **ui:** 24. feat: Enhance task dialog form with advanced microinteractions ([5091cd2](https://github.com/axlwolf/task_manager/commit/5091cd2))
+- **ui:** 23. feat: Add documentation and enhance animation directives ([4f5c003](https://github.com/axlwolf/task_manager/commit/4f5c003))
+- **docs:** 22. docs: Update memory-bank documentation to reflect recent changes ([c2d729d](https://github.com/axlwolf/task_manager/commit/c2d729d))
+- **architecture:** 21. refactor: Clean up project structure and remove duplicated models ([9a81e1e](https://github.com/axlwolf/task_manager/commit/9a81e1e))
+- **ui:** 20. feat: Implement task form as a native HTML dialog element ([0876b4e](https://github.com/axlwolf/task_manager/commit/0876b4e))
+- **architecture:** 19. refactor: Clean up unused components, services and directives ([ebb6765](https://github.com/axlwolf/task_manager/commit/ebb6765))
+- **ui:** 18. feat: Update task form dialog with new design and improved functionality ([40e9929](https://github.com/axlwolf/task_manager/commit/40e9929))
+- **ui:** 17. refactor: Update components to use Angular 18 built-in control flow and update documentation ([e154fed](https://github.com/axlwolf/task_manager/commit/e154fed))
+- **ui:** 16. refactor: Remove duplicate task form component and simplify dialog implementation ([2026ffe](https://github.com/axlwolf/task_manager/commit/2026ffe))
+- **ui:** 15. feat: Implement dialog modal component for adding tasks with microinteractions ([5b9c28c](https://github.com/axlwolf/task_manager/commit/5b9c28c))
+- **ui:** 14. feat: Implement comprehensive microinteractions system ([cc9fb67](https://github.com/axlwolf/task_manager/commit/cc9fb67))
+- **ui:** 13. feat: Implement icon system with Feather Icons and microinteractions ([454afd4](https://github.com/axlwolf/task_manager/commit/454afd4))
+- **docs:** 12. docs: Update project structure in README.md to reflect latest changes ([902fea5](https://github.com/axlwolf/task_manager/commit/902fea5))
+- **docs:** 11. docs: Update repository links in README.md ([a7619aa](https://github.com/axlwolf/task_manager/commit/a7619aa))
+- **testing:** 10. feat: Implement comprehensive testing strategy and fix test configuration ([6a12182](https://github.com/axlwolf/task_manager/commit/6a12182))
+- **ui:** 8. Removed Natural Productivity theme ([1696c66](https://github.com/axlwolf/task_manager/commit/1696c66))
+- **ui:** 7. Adjusted Fresh Turquoise theme colors ([647e984](https://github.com/axlwolf/task_manager/commit/647e984))
+- **ui:** 6. Added Fresh Turquoise theme ([151c93e](https://github.com/axlwolf/task_manager/commit/151c93e))
+- **architecture:** 5. Project structure optimization and theme improvements ([e312ee3](https://github.com/axlwolf/task_manager/commit/e312ee3))
+- **ui:** 4. Change theme feature ([43d8113](https://github.com/axlwolf/task_manager/commit/43d8113))
+- **docs:** 3. Memory bank added ([d2f00e9](https://github.com/axlwolf/task_manager/commit/d2f00e9))
+- **docs:** 2. Update README.md ([8dedb67](https://github.com/axlwolf/task_manager/commit/8dedb67))
+- **architecture:** 1. First commit ([aae9a41](https://github.com/axlwolf/task_manager/commit/aae9a41))
+
+### Bug Fixes
+
+- **testing:** Merge pull request #5 from axlwolf/feature/component-tests ([d3a6603](https://github.com/axlwolf/task_manager/commit/d3a6603))
+- **architecture:** Merge pull request #4 from axlwolf/feature/trunk-based-development ([9403be1](https://github.com/axlwolf/task_manager/commit/9403be1))
+- **testing:** Merge pull request #3 from axlwolf/feature/service-tests ([d6af53d](https://github.com/axlwolf/task_manager/commit/d6af53d))
+- **testing:** Merge pull request #2 from axlwolf/feature/usecase-tests ([bdd9c0d](https://github.com/axlwolf/task_manager/commit/bdd9c0d))
+- **architecture:** Merge pull request #1 from axlwolf/feature/trunk-based-development ([7e21afd](https://github.com/axlwolf/task_manager/commit/7e21afd))
+- **docs:** Revert "27. docs: implement comprehensive unit testing strategy" ([e1cfd95](https://github.com/axlwolf/task_manager/commit/e1cfd95))
+- **ui:** refactor: clean up dialog component and remove unused modules (#1) ([97215bf](https://github.com/axlwolf/task_manager/commit/97215bf))
+- **docs:** docs: document Trunk-Based Development strategy (#6) ([3844b29](https://github.com/axlwolf/task_manager/commit/3844b29))
+- **docs:** 9. Correct commit messages numbering ([1f9e752](https://github.com/axlwolf/task_manager/commit/1f9e752))
